@@ -1,0 +1,54 @@
+#dialog:not(:target) {
+    display: none;
+
+  }
+
+  #dialog:target {
+
+    display: block;
+    position: fixed;
+    z-index: 10000;
+    background-color: rgba(0,0,0,0.25);
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.25);
+
+    
+  }
+  
+  .vs-test-dialog{
+    margin-top: 25vh;
+    margin-right: auto;
+    margin-left: auto;
+    height: max-content;
+    width: max-content;
+    max-width: 90vw;
+    max-height: 50vh;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: white;
+  }
+  
+/*
+  .mdl-layout__drawer{
+
+    width: 400px;
+    transform: translateX(-400px);
+  }
+*/
+
+ul {
+  list-style:none;
+  margin-left:0;
+  padding-left:0;
+  }
+
+
+li {
+  margin-left: 5px;
+  margin-top: 0px;
+  margin-bottom:0px;/* à adapter */
+}
+
