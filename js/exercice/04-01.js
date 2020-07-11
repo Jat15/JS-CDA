@@ -4,6 +4,10 @@ import {} from '../menu.js'
 //importation de fonction
 import * as vs from '../vs.js'
 
+//importation de la vérification des champ
+import * as verif_form from '../formulaire.js'
+
+
 //donnée de base de l'excercice
 const def = {
     cours: "04 - Afficher du texte",
@@ -50,12 +54,16 @@ export function vue() {
         }
     )
 
+    verif_form.create_event(data_send.nom.id)
+
     vs.add(
         {
             selecteur: "#formulaire",
             text: vs.form_name(data_send.prenom)
         }
     )
+
+    verif_form.create_event(data_send.prenom.id)
 
     vs.add(
         {
@@ -65,21 +73,23 @@ export function vue() {
     )
 
     vs.form_end()
-
-
-    import('../formulaire.js')
-      .then(x => x)
     
     //Envoie des donnée si on clique sur le bouton
     document.getElementById('valid_form').addEventListener("click", function () {
-        //Récupération des input
-        const nom = this.parentNode.querySelector("#" + data_send.nom.id).value
-        const prenom = this.parentNode.querySelector("#" + data_send.prenom.id).value
-        const genre = this.parentNode.querySelector("input[name=\"" + data_send.genre.name + "\"]:checked").value
+        let message
 
-        //Création du message
-        let message = "<p>Bonjour " + genre + " " + nom + " " + prenom + "</p>"
-        alert(form_error_var)
+        if ( verif_form.no_error() ) {
+            //Récupération des input
+            const nom = this.parentNode.querySelector("#" + data_send.nom.id).value
+            const prenom = this.parentNode.querySelector("#" + data_send.prenom.id).value
+            const genre = this.parentNode.querySelector("input[name=\"" + data_send.genre.name + "\"]:checked").value
+
+            //Création du message
+            message = "<p>Bonjour " + genre + " " + nom + " " + prenom + "</p>"
+        } else {
+            message = "<p>Remplissez correctement vos champs</p>"
+        }
+
         //envoie du message
         vs.modal_result(this, message)
 

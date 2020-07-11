@@ -30,7 +30,6 @@ export function form_name(data) {
     fragment.querySelector('div').appendChild(el);
 
     return fragment;
-
 }
 
 
@@ -76,6 +75,7 @@ export function add(data) {
         document.querySelector(data.selecteur).insertAdjacentHTML('beforeend', data.text);
     else 
         document.querySelector(data.selecteur).appendChild(data.text);
+
     componentHandler.upgradeDom()
 }
 
@@ -154,6 +154,8 @@ export function form_start(data){
     Ajout du contenue envoier
     Formulaire reset
     Modification la barre d'adresse
+
+    Actualisation de mdl........
 */
 export function modal_result(bouton, message) {
     kill_child(document.querySelector("#resultat"))
@@ -161,5 +163,13 @@ export function modal_result(bouton, message) {
     document.querySelector("#resultat").insertAdjacentHTML('beforeend', message)
     document.querySelector("form").reset()
     window.location = ("" + window.location).replace(/#[A-Za-z0-9_]*$/, '') + "#dialog" 
+
+    let element = document.querySelectorAll(".is-dirty")
+    if (element)
+        element.forEach(champ => champ.classList.remove("is-dirty"))
+    
+    element = document.querySelectorAll(":checked")
+    if (element)
+        element.forEach(champ => champ.parentNode.click())
 }
 

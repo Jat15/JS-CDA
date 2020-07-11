@@ -5,7 +5,7 @@ Si il y a les donnée dans la table et que l'id existe
 	Si on cache ou affiche les erreurs et le retour
 */
 
-export let form_error_var = {}
+export let error_array = {}
 
 const regex = {
     entier: /^[1-9][0-9]*$/,
@@ -16,9 +16,6 @@ const regex = {
 function affichage(name) {
     const element = document.querySelector("#"+name)
     const regex_index= element.getAttribute("data-vs-form-pattern")
-	/*if (table_regex[name]["container"] != undefined ){
-		name_value += ":checked" 
-    }*/
     let value = element.value
     
     
@@ -46,20 +43,40 @@ function affichage(name) {
 
         if(regex[regex_index].test(value)) {
             element.parentNode.classList.remove("is-invalid")
-            form_error_var.name = false
+            error_array[name] = true
         } else {
             element.parentNode.classList.add("is-invalid")
-            form_error_var.name = true
+            error_array[name] = false
         }
 }
 
 //Quand un champs est modifier 
 //change
-document.querySelectorAll("input, textarea, select").forEach(input => input.addEventListener("keyup", function () {
-    let name = this.id
-    affichage(name) 
-}))
 
+//document.querySelectorAll("input, textarea, select").forEach(input => input.addEventListener("keyup", 
+function verif(id) {
+    affichage(id)
+}
+
+export function create_event(id){
+    document.getElementById(id).addEventListener("keyup", function() {verif(id)})
+    error_array[id] = false
+}
+
+export function no_error(){
+    let no_error = true;
+    Object.values(error_array).forEach(function(input) {
+        no_error = input && no_error
+    })
+
+    if (no_error) {
+        Object.keys(error_array).forEach(function(cle) {
+            error_array[cle] = false
+        })
+    }
+    return no_error
+}
+/*
 //a l'envoie du formulaire
 document.querySelector("form").addEventListener("submit", function (){
     let erreur = false
@@ -70,7 +87,7 @@ document.querySelector("form").addEventListener("submit", function (){
 })
 
 
-/*
+
 //Si reset
 
 //.addEventListener('reset')
@@ -81,4 +98,3 @@ $(":reset").click(function (){
     }
 })
 */
-
