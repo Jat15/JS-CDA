@@ -59,6 +59,6 @@ export function vue() {
         message = produit(x,y)
         message += afficheImg("./img/papillon.jpg")
         
-        vs.modal_result(this, message)
+        vs.modal_result(message)
     }, false);
 }

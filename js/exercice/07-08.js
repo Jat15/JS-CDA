@@ -65,6 +65,6 @@ export function vue() {
 
         const message = "Vous avez " + nombre + " voyelle";
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
     }, false);
 }

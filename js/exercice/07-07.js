@@ -60,7 +60,7 @@ export function vue() {
         }
 
 
-        vs.modal_result(this, resultat)
+        vs.modal_result(resultat)
         
     }, false);
 }

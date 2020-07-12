@@ -309,7 +309,7 @@ export function vue() {
 
             const message = produit(x,y)
 
-            vs.modal_result(this, message)          
+            vs.modal_result(message)          
         }
     )
 
@@ -335,7 +335,7 @@ export function vue() {
             )
 
             const message = "<p>La somme est : "+resultat+". La moyenne est " + (resultat/liste_nombre.length) + "</p>"
-            vs.modal_result(this, message)
+            vs.modal_result(message)
 
             liste_nombre = []
         }
@@ -375,7 +375,7 @@ export function vue() {
 
             resultat = "<p>" + resultat + "</p>"
 
-            vs.modal_result(this, resultat)          
+            vs.modal_result(resultat)          
         }
     )
 
@@ -393,7 +393,7 @@ export function vue() {
             resultat = "<p>" + resultat + "</p>"
 
 
-            vs.modal_result(this, resultat)          
+            vs.modal_result(resultat)          
         }
     )
 }

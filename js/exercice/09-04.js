@@ -64,7 +64,7 @@ export function vue() {
         array = tri_bulle(array)
 
         const message = "<p>" + array + "</p>"
-        vs.modal_result(this, message)
+        vs.modal_result(message)
         
     }, false);
 }

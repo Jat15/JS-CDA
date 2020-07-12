@@ -58,7 +58,7 @@ export function vue() {
             message = "<p>Nombre entier positif ou négatif</p>";
         }
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
 
     }, false);
 }

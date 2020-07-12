@@ -41,7 +41,7 @@ export function vue() {
         message = "<p>" + message + "</p>"
 
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
 
     }, false);
 }

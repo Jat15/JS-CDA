@@ -58,7 +58,7 @@ export function vue() {
 
             const message= "<p>Moin de 20 ans : " + moin_vingt + "</p><p>Entre 20 et 40 ans : " + entre_vingt_quarante + "</p><p>Plus de 40 ans : " + plus_quarante + "</p>"
                 
-            vs.modal_result(this, message)
+            vs.modal_result(message)
             liste_age = [];
             
         }

@@ -87,6 +87,6 @@ export function vue() {
 
         const message = strtok(phrase1, phrase2, nombre);
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
     }, false);
 }

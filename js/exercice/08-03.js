@@ -66,7 +66,7 @@ export function vue() {
 
         const message = "<p>La lettre " + l +  " est : " + nombre_lettre(p,l) + " fois</p><p>Dans la phrase : " + p + "</p>";
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
 
     }, false);
 }

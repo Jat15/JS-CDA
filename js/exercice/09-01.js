@@ -45,23 +45,24 @@ export function vue() {
 
 
     document.getElementById(data_send.taille.id).addEventListener("change", function () {
+        let fragment_optional = document.createDocumentFragment();
         vs.kill_child(document.querySelector("#champ_optionelle"))
         let nombre = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value)
         if (nombre) {
             for (let i = 0; i < nombre; i++) {
-                vs.add(
-                    {
-                        selecteur: "#champ_optionelle",
-                        text: vs.form_name({
-                            id: data_send.procedural.id + i,
-                            name: data_send.procedural.name + i,
-                            erreur: data_send.procedural.erreur
-                        })
-                    }
-                )
+                const el = vs.form_name({
+                    id: data_send.procedural.id + i,
+                    name: data_send.procedural.name + i,
+                    erreur: data_send.procedural.erreur
+                })
+                
+                fragment_optional.appendChild(el) 
             }
         }
-
+        vs.add({
+            selecteur: "#champ_optionelle",
+            text: fragment_optional,
+        })
     }, false)
     document.getElementById('valid_form').addEventListener("click", function () {
         let array_length = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value);      
@@ -71,7 +72,7 @@ export function vue() {
             resultat = resultat + "<p>Valeur ["+ i +"] : "+ this.parentNode.querySelector("#" + data_send.procedural.id + i).value + "<p>"
         }
 
-        vs.modal_result(this, resultat)
+        vs.modal_result(resultat)
         
         const event = new Event('change');
         document.getElementById(data_send.taille.id).dispatchEvent(event);       

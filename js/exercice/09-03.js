@@ -88,7 +88,7 @@ export function vue() {
             message = message + "<p>Valeur ["+ i +"] : "+ tab[i] + "</p>"
         }
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
         
     }, false);
 }

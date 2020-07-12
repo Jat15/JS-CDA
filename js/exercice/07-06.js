@@ -54,7 +54,7 @@ export function vue() {
             )
 
             let message = "<p>Mini : " + min + "</p><p>Max : " + max + "</p>";
-            vs.modal_result(this, message)
+            vs.modal_result(message)
 
             liste_nombre = [];
         }

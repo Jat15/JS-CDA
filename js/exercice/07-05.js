@@ -20,12 +20,10 @@ export function vue() {
 
     vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nombre)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nombre)
+    })
 
     vs.form_end()
 
@@ -45,7 +43,7 @@ export function vue() {
             )
 
             const message = "<p>La somme est : "+resultat+". La moyenne est " + (resultat/liste_nombre.length) + "</p>";
-            vs.modal_result(this, message)
+            vs.modal_result(message)
 
             liste_nombre = [];
         }

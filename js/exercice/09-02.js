@@ -277,7 +277,7 @@ export function vue() {
         for (let i in main_table)
             resultat += "<p>Valeur ["+ i +"] : "+ main_table[i] + "</p>";
 
-        vs.modal_result(this, resultat)
+        vs.modal_result(resultat)
     }, false)
 
     //InfoTab()
@@ -291,7 +291,7 @@ export function vue() {
 
         const resultat = "<p>Le maximum est " + Math.max(...main_table) + " et la moyenne est " + moyenne
 
-        vs.modal_result(this, resultat)
+        vs.modal_result(resultat)
 
     }, false)
 
@@ -306,7 +306,7 @@ export function vue() {
 
         resultat = "<p>" + resultat + "</p>"
 
-        vs.modal_result(this, resultat)
+        vs.modal_result(resultat)
     }, false)
 
 

@@ -38,7 +38,7 @@ export function vue() {
 
         let message = "<p>" + ouai + "</p>"
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
 
     }, false);
 }
