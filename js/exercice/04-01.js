@@ -26,19 +26,17 @@ export function vue() {
         nom: {
             id: "nom",
             name: "Nom",
-            pattern: "nom_propre",
-            erreur: "Les lettre et les espace, ', - sont autorisé."
+            pattern: "nom_propre"
         },
         prenom: {
             id: "prenom",
             name: "Prénom",
-            pattern: "nom_propre",
-            erreur: "Les lettre et les espace, ', - sont autorisé."
+            pattern: "nom_propre"
         },
         genre: {
             box_name: "Genre",
             name: "sexe",
-            value: ["monsieurs", "madame"],
+            value: ["monsieur", "madame"],
             label: ["Homme", "Femme"],
         }
     }
@@ -47,30 +45,20 @@ export function vue() {
     //Création du contenue de la page
     vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nom)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nom)
+    })
 
-    verif_form.create_event(data_send.nom.id)
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.prenom)
+    })
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.prenom)
-        }
-    )
-
-    verif_form.create_event(data_send.prenom.id)
-
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_radio(data_send.genre)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_radio(data_send.genre)
+    })
 
     vs.form_end()
     
@@ -91,7 +79,7 @@ export function vue() {
         }
 
         //envoie du message
-        vs.modal_result(this, message)
+        vs.modal_result(message)
 
-    }, false);
+    }, false)
 }
