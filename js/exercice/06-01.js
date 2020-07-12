@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "06 - Conditions",
@@ -14,32 +15,33 @@ export function vue() {
         nombre : {
             id : "nombre",
             name : "Nombre",
-            erreur : "Ceci n'est pas un nombre!"
+            pattern: "entier"
         }
     }
 
     vs.form_start(def)
 
-
-    vs.add(
-        {
-            selecteur : "#formulaire",
-            text : vs.form_name (data_send.nombre)
-        }
-    )
+    vs.add({
+        selecteur : "#formulaire",
+        text : vs.form_name (data_send.nombre)
+    })
 
     vs.form_end()
 
     document.getElementById('valid_form').addEventListener("click", function() {
         let resultat
-        const nombre = this.parentNode.querySelector("#" + data_send.nombre.id).value
 
-        resultat = nombre%2 == 0 ? "Nombre pair" : "Nombre impair"
+        if ( verif_form.no_error() ) {
+            const nombre = this.parentNode.querySelector("#" + data_send.nombre.id).value
 
+            resultat = nombre%2 == 0 ? "Nombre pair" : "Nombre impair"
+        } else {
+            resultat = "Remplissez correctement le champ"
+        }
         resultat = "<p>" + resultat + "</p>"
 
-        vs.modal_result(this, resultat)
+        vs.modal_result(resultat)
 
-    }, false);
+    }, false)
 
 }
