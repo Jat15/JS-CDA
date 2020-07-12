@@ -11,7 +11,8 @@ export const menu = {
             "01 - Parité", 
             "02 - Age", 
             "03 - Calculette",
-            "04 - Remise"
+            "04 - Remise",
+            "05 - Participation"
         ]
     },
     7: {
@@ -56,16 +57,14 @@ export const menu = {
 */
 function create_menu() {
 
-    let text ="<ul class=\"mdl-navigation\">";
+    let text ="<ul class=\"mdl-navigation\">"
   
     Object.entries(menu).forEach(([cle, valeur]) => {
-
       text +=`<li>`
             + `<span class="mdl-layout-title">` + menu[cle].cours + `</span>`
         + `<ul>`
 
       Object.entries(valeur.excercice).forEach(([key, value]) => {
-
           let ex = parseInt(key)+1
           ex = ex<10 ? "0"+ex : ex
   
@@ -79,9 +78,9 @@ function create_menu() {
         +`</li>`
     });
   
-    text += "</ul>";
+    text += "</ul>"
 
-    document.querySelector('.mdl-layout__drawer').insertAdjacentHTML('beforeend', text);
+    document.querySelector('.mdl-layout__drawer').insertAdjacentHTML('beforeend', text)
 }
 
-create_menu();
+create_menu()
