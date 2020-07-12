@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -14,46 +15,47 @@ export function vue() {
         prenom: {
             id: "prenom",
             name: "Choissisez un prénom",
-            erreur: "Nom pas bon !"
+            pattern: "nom_propre_rien"
         },
     }
         
-    let liste_prenom = [];
+    let liste_prenom = []
 
     vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.prenom)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.prenom)
+    })
 
     vs.form_end()
 
-    document.getElementById('valid_form').addEventListener("click", function () {
-        let prenom = this.parentNode.querySelector("#" + data_send.prenom.id).value;
+    document.getElementById('valid_form').addEventListener("click", function () {        
+        let message
 
-        if (prenom) {
-            liste_prenom.push(prenom)
-            this.parentNode.reset();
-        } else {
-
-            let message = "<p>Il y a " + liste_prenom.length + " prénoms:</p>";
-
-            liste_prenom.forEach(
-                function(prenom) {
-                    message += "<p>" + prenom + "</p>"
-                }
-            )
-                
-
-
-            vs.modal_result(this, message)
+        if (verif_form.no_error()) {     
+            let prenom = this.parentNode.getElementById(data_send.prenom.id).value
             
-            liste_prenom = [];
+            if (prenom) {
+                liste_prenom.push(prenom)
+                this.parentNode.reset()
+            } else {
+                message = "<p>Il y a " + liste_prenom.length + " prénoms:</p>"
 
+                liste_prenom.forEach(
+                    function(prenom) {
+                        message += "<p>" + prenom + "</p>"
+                    }
+                )
+
+                liste_prenom = []
+            }
+        } else {
+            message = "<p>Remplissez correctement le champ</p>"
         }
 
-    }, false);
+        if (message)
+            vs.modal_result(message)
+
+    }, false)
 }

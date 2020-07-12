@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "06 - Conditions",
@@ -20,12 +21,12 @@ export function vue() {
         salaire: {
             id: "salaire",
             name: "Salaire mensuel",
-            erreur: "Nom pas bon !"
+            pattern: "decimal_2"
         },
         enfant: {
             id: "enfant",
             name: "Nombre d'enfants",
-            erreur: "Nom pas bon !"
+            pattern: "entier_zero_sup"
         },
         marie: {
             box_name: "En couple",
@@ -37,49 +38,47 @@ export function vue() {
 
     vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_radio(data_send.marie)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_radio(data_send.marie)
+    })
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.enfant)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.enfant)
+    })
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.salaire)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.salaire)
+    })
 
     vs.form_end()
 
     document.getElementById('valid_form').addEventListener("click", function () {
-        let pourcentage;
-        let marie =  this.parentNode.querySelector("input[name=\"" + data_send.marie.name + "\"]:checked").value;
-        let enfant = parseInt(this.parentNode.querySelector("#" + data_send.enfant.id).value);
-        let salaire = parseInt(this.parentNode.querySelector("#" + data_send.salaire.id).value);
+        let message
+        
+        if (verif_form.no_error()) {
+            let pourcentage
+            const marie =  parseInt(this.parentNode.querySelector("input[name=\"" + data_send.marie.name + "\"]:checked").value)
+            const enfant = parseInt(this.parentNode.getElementById(data_send.enfant.id).value)
+            const salaire = parseFloat(this.parentNode.getElementById(data_send.salaire.id).value)
 
-        pourcentage = parseInt(marie);
+            pourcentage = marie
 
-        if (salaire < 1200)
-            pourcentage = pourcentage + 10
+            if (salaire < 1200)
+                pourcentage = pourcentage + 10
 
+            pourcentage = pourcentage + (enfant * 10)
 
-        pourcentage = pourcentage + (enfant * 10);
+            if (pourcentage > 50)
+                pourcentage = 50
+                
+            message = "<p>Vous avez le droit a: " + pourcentage + "%</p>"
+        } else {
+            message = "<p>Remplissez correctement les champs</p>"
+        }
 
-        if (pourcentage > 50)
-            pourcentage = 50
-
-
-        const resultat = "<p>Vous avez le droit a: "+pourcentage+"%</p>";
-
-        vs.modal_result(this, resultat)
-    }, false);
+        vs.modal_result(message)
+    }, false)
 }

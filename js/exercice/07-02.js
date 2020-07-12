@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -12,34 +13,32 @@ export function vue() {
         nombre: {
             id: "nombre",
             name: "Nombre",
-            erreur: "Nom pas bon !"
+            pattern: "entier_sup"
         },
     }
 
     vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nombre)
-        }
-    )
+    vs.add({
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nombre)
+    })
 
     vs.form_end()
 
     document.getElementById('valid_form').addEventListener("click", function () {
-        let nombre = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
-        let resultat = "";
+        let resultat = ""
 
-        for (let i = nombre; i>0; i--) {   
-            if (nombre!=i)        
-                resultat += "<p>" + i + "</p>";
-            else
-                resultat += "<p> Les inférieur a " + nombre + " sont: </p>";
+        if (verif_form.no_error()) {   
+            const nombre = parseInt(this.parentNode.getElementById(data_send.nombre.id).value)
+        
+            for (let i = nombre ; i>0 ; i--) {   
+                resultat += (nombre != i) ? "<p>" + i + "</p>" : "<p> Les inférieur a " + nombre + " sont: </p>"
+            }
+        } else {
+            message = "<p>Remplissez correctement le champ</p>"
         }
 
-        vs.modal_result(this, resultat)
-            
-
-    }, false);
+        vs.modal_result(resultat)
+    }, false)
 }

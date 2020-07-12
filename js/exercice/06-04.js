@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "06 - Conditions",
@@ -12,18 +13,17 @@ const def = {
         + `</ul>`
 }
 
-function vue() {
-
+export function vue() {
     const data_send = {
         pu : {
             id : "pu",
             name : "Prix Unitaire",
-            erreur : "Ceci n'est pas un prix "
+            pattern : "decimal_2"
         },
         qte : {
             id : "qte",
             name : "Quantité",
-            erreur : "Une quantité doit êtres au dessus de 0"
+            pattern : "entier_sup"
         },
     }
 
@@ -47,54 +47,41 @@ function vue() {
     document.getElementById('valid_form').addEventListener("click", function () {
 
         //Prix a payer , port , remise, tot= prix total
-        let PAP = 0;
-        let PORT = 0;
-        let REM = 0;
+        let message = ""
 
-        let PU = parseFloat(this.parentNode.querySelector("#" + data_send.pu.id).value);
-        let QTECOM = parseInt(this.parentNode.querySelector("#" + data_send.qte.id).value);
-
-        let message = "";
-
-        const nombres_virgule = /^(([1-9]{1,}[0-9]*)|([0-9]+\.([1-9][0-9]?|[0-9]?[1-9])))$/;
-        const nombres = /^[1-9][0-9]*$/;
-
-        if (!nombres_virgule.test(PU))
-            message = "Le prix minimum est 0.01 et deux décimal maximum.";
-
-        if (!nombres.test(QTECOM))
-            message = "Il faut mettre un chiffre supérieur a 0";
-        
-        if (!message) { 
-            let TOT = QTECOM * PU;
+        if (verif_form.no_error()) {
+            let PAP = 0
+            let PORT = 0
+            let REM = 0
+    
+            const PU = parseFloat(this.parentNode.querySelector("#" + data_send.pu.id).value)
+            const QTECOM = parseInt(this.parentNode.querySelector("#" + data_send.qte.id).value)
+            const TOT = QTECOM * PU
 
             if (TOT >= 100 && TOT <= 200)
-                REM = TOT * (5 / 100);
+                REM = TOT * (5 / 100)
             else if (TOT > 200)
-                REM = TOT * (10 / 100);
+                REM = TOT * (10 / 100)
             
-            PAP = TOT - REM;
+            PAP = TOT - REM
             
             if (PAP > 500)
-                PORT = 0;
+                PORT = 0
             else
             {
-                PORT = PAP * (2 / 100);
+                PORT = PAP * (2 / 100)
                 if (PORT < 6)
-                    PORT = 6; 
+                    PORT = 6 
             }
             
-            PAP = PAP + PORT;
+            PAP = PAP + PORT
 
             message = "<p>Prix HT : " + TOT.toFixed(2) + "€</p><p>Frais de port : " + PORT.toFixed(2) + "€</p><p>Remise : " + REM.toFixed(2) + "€</p><p>Prix TTC : " + PAP.toFixed(2) + "€</p>"
+        } else {
+            message = "<p>Remplissez correctement les champs</p>"
         }
 
-        vs.modal_result(this, message)
+        vs.modal_result(message)
 
-    }, false);
+    }, false)
 }
-
-
-export {vue};
-
-

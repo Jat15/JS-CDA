@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "06 - Conditions",
@@ -14,81 +15,76 @@ export function vue() {
         nombre1 : {
             id : "nombre1",
             name : "Nombre",
-            erreur : "Ceci n'est pas le bon nombre!"
+            pattern: "entier"
         },
         operateur : {
             id : "operateur",
             name : "Operateur",
-            erreur : "Ceci n'est pas le bon nombre!"
+            pattern: "operateur"
         },
         nombre2 : {
             id : "nombre2",
             name : "Nombre",
-            erreur : "Ceci n'est pas le bon nombre!"
+            pattern: "entier"
         }
     }
 
     vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur : "#formulaire",
-            text : vs.form_name (data_send.nombre1)
-        }
-    )
-    vs.add(
-        {
-            selecteur : "#formulaire",
-            text : vs.form_name (data_send.operateur)
-        }
-    )
-    vs.add(
-        {
-            selecteur : "#formulaire",
-            text : vs.form_name (data_send.nombre2)
-        }
-    )
+    vs.add({
+        selecteur : "#formulaire",
+        text : vs.form_name (data_send.nombre1)
+    })
+
+    vs.add({
+        selecteur : "#formulaire",
+        text : vs.form_name (data_send.operateur)
+    })
+
+    vs.add({
+        selecteur : "#formulaire",
+        text : vs.form_name (data_send.nombre2)
+    })
 
     vs.form_end()
 
     document.getElementById('valid_form').addEventListener("click", function () {
-        let retour;
-        let resultat;
-        const nombres1 = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value);
-        const operateur = this.parentNode.querySelector("#" + data_send.operateur.id).value;
-        const nombres2 = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value);
+        let retour
 
-        if (operateur != "+" && operateur != "*" && operateur != "/" && operateur != "-") {
-            retour = "Erreur d'opérateur";
-        }
-        else if (operateur == "/" && nombres2 == 0)
-        {
-            retour = "Impossible de diviser par 0";
-        }
-        else
-        {
-            switch (operateur)
-            {   
-                case "+" :
-                    resultat = nombres1 + nombres2;
-                    break; 
-                case "-" :
-                    resultat = nombres1 - nombres2;
-                    break;
-                case "/" :
-                    resultat = nombres1 / nombres2;
-                    break;
-                case "*" :
-                    resultat = nombres1 * nombres2;
-                    break;
-            } 
-            retour = "Le résultat est : "+ resultat;
+
+        if (verif_form.no_error()) {
+            let resultat
+            const nombres1 = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
+            const operateur = this.parentNode.querySelector("#" + data_send.operateur.id).value
+            const nombres2 = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
+
+            if (operateur == "/" && nombres2 == 0) {
+                retour = "Impossible de diviser par 0"
+            } else {
+                switch (operateur) {   
+                    case "+" :
+                        resultat = nombres1 + nombres2
+                        break
+                    case "-" :
+                        resultat = nombres1 - nombres2
+                        break
+                    case "/" :
+                        resultat = nombres1 / nombres2
+                        break
+                    case "*" :
+                        resultat = nombres1 * nombres2
+                        break
+                } 
+                retour = "Le résultat est : "+ resultat
+            }
+        } else {
+            retour = "Remplissez correctement les champs"
         }
 
         retour = "<p>" + retour + "</p>"
 
-        vs.modal_result(this, retour)
+        vs.modal_result(retour)
 
-    }, false);
+    }, false)
 
 }
