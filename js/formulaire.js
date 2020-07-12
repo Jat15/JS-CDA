@@ -1,25 +1,51 @@
-/*
-Si il y a quelque chose dans la variable container on déduit que ces radio ou checkbox
-Si il y a les donnée dans la table et que l'id existe
-	Si on a un Nom propre on le format
-	Si on cache ou affiche les erreurs et le retour
-*/
-
 export let error_array = {}
 
-const regex = {
-    entier: /^[1-9][0-9]*$/,
-    decimal_2: /^(([1-9]{1,}[0-9]*)|([0-9]+\.([1-9][0-9]?|[0-9]?[1-9])))$/,
-    nom_propre: /^[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}([- ']{1}[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}){0,}$/
+/*
+Les regex + message d'erreurs par défaut
+*/
+export const regex = {
+    entier: {
+        pattern: /^-?[0-9]+$/,
+        message: "Entier positif et négatif"
+    },
+    entier_zero_sup: {
+        pattern: /^[0-9]+$/,
+        message: "Entier positif"
+    },
+    entier_sup: {
+        pattern: /^[1-9][0-9]*$/,
+        message: "Entier supérieurs à 0."
+    },
+    decimal_2: {
+        pattern: /^(([1-9]{1,}[0-9]*)|([0-9]+\.([1-9][0-9]?|[0-9]?[1-9])))$/,
+        message: "Minimum est 0.01 et deux décimal maximum."
+    },
+    operateur: {
+        pattern: /^(\+|\-|\/|\*)$/,
+        message: "L'opérateur ne peut être que : + - / *"
+    },
+    nom_propre: {
+        pattern: /^[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}([- ']{1}[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}){0,}$/,
+        message: "Les lettre et les espace, ', - sont autorisé."
+    },
+    nom_propre_rien: {
+        pattern: /^([A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}([- ']{1}[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}){0,})$|^$/,
+        message: "Les lettre et les espace, ', - sont autorisé. Ou rien pour valider."
+    }
 }
 
-function affichage(name) {
-    const element = document.querySelector("#"+name)
+/*
+il chercher le nom du pattern dans les attribut
+Si ces un nom propre on lui mes une majuscule aprés chaque séparation
+Il affiche ou supprime le message d'erreur et le sauvegarde dans la variable gloabal
+*/
+function affichage(id) {
+    const element = document.getElementById(id)
     const regex_index= element.getAttribute("data-vs-form-pattern")
     let value = element.value
     
     
-       if (regex_index === "nom_propre") {
+       if (regex_index === "nom_propre" || regex_index === "nom_propre_rien") {
             let separateur = /^[\s,',-]$/
             let premier_lettre = true
             let assemblage = ""
@@ -41,30 +67,34 @@ function affichage(name) {
             }
         }
 
-        if(regex[regex_index].test(value)) {
+        if(regex[regex_index].pattern.test(value)) {
             element.parentNode.classList.remove("is-invalid")
-            error_array[name] = true
+            error_array[id] = true
         } else {
             element.parentNode.classList.add("is-invalid")
-            error_array[name] = false
+            error_array[id] = false
         }
 }
 
-//Quand un champs est modifier 
-//change
-
-//document.querySelectorAll("input, textarea, select").forEach(input => input.addEventListener("keyup", 
-function verif(id) {
-    affichage(id)
-}
-
+/*
+    Création de l'event et de sa valeur dans le tableau
+*/
 export function create_event(id){
-    document.getElementById(id).addEventListener("keyup", function() {verif(id)})
+    document.getElementById(id).addEventListener("keyup", function() {affichage(id)})
     error_array[id] = false
 }
 
+/*
+    Met a jour le tableau des erreurs
+    Calcule tout les boolean du tableau
+    Si ces vraie tout les valeur sont remis sur "faux"
+    Renvoie la boolean 
+*/
 export function no_error(){
-    let no_error = true;
+   
+    document.querySelectorAll("input[data-vs-form-pattern]").forEach( input => affichage(input.id))
+    let no_error = true
+
     Object.values(error_array).forEach(function(input) {
         no_error = input && no_error
     })
@@ -74,27 +104,6 @@ export function no_error(){
             error_array[cle] = false
         })
     }
+
     return no_error
 }
-/*
-//a l'envoie du formulaire
-document.querySelector("form").addEventListener("submit", function (){
-    let erreur = false
-    for (let name in table_regex) {
-        erreur = affichage(name) || erreur
-    }
-    return !erreur
-})
-
-
-
-//Si reset
-
-//.addEventListener('reset')
-$(":reset").click(function (){
-    $("form").trigger("reset")
-    for (let name in table_regex) {
-        erreur = affichage(name)
-    }
-})
-*/
