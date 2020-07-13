@@ -9,73 +9,71 @@ const def = {
         + `<p>Puis votre programme doit afficher le contenu du tableau</p>`
 }
 
-export function vue() {
-    const data_send = {
-        taille: {
-            id: "taille",
-            name: "Taille du tableau",
-            erreur: "Nom pas bon !"
-        },
-        procedural: {
-            id: "test_",
-            name: "Champ ",
-            erreur: "Nom pas bon !"
+const data_send = {
+    taille: {
+        id: "taille",
+        name: "Taille du tableau",
+        erreur: "Nom pas bon !"
+    },
+    procedural: {
+        id: "test_",
+        name: "Champ ",
+        erreur: "Nom pas bon !"
+    }
+}
+
+vs.form_start(def)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.taille)
+    }
+)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text:`
+            <div id="champ_optionelle"><div>
+        `
+    }
+)
+
+vs.form_end()
+
+
+document.getElementById(data_send.taille.id).addEventListener("change", function () {
+    let fragment_optional = document.createDocumentFragment();
+    vs.kill_child(document.querySelector("#champ_optionelle"))
+    let nombre = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value)
+    if (nombre) {
+        for (let i = 0; i < nombre; i++) {
+            const el = vs.form_name({
+                id: data_send.procedural.id + i,
+                name: data_send.procedural.name + i,
+                erreur: data_send.procedural.erreur
+            })
+            
+            fragment_optional.appendChild(el) 
         }
     }
+    vs.add({
+        selecteur: "#champ_optionelle",
+        text: fragment_optional,
+    })
+}, false)
+document.getElementById('valid_form').addEventListener("click", function () {
+    let array_length = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value);      
+            
+    let resultat = "";
+    for (let i = 0; i < array_length; i++) {
+        resultat = resultat + "<p>Valeur ["+ i +"] : "+ this.parentNode.querySelector("#" + data_send.procedural.id + i).value + "<p>"
+    }
 
-    vs.form_start(def)
-
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.taille)
-        }
-    )
-
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text:`
-                <div id="champ_optionelle"><div>
-            `
-        }
-    )
-
-    vs.form_end()
-
-
-    document.getElementById(data_send.taille.id).addEventListener("change", function () {
-        let fragment_optional = document.createDocumentFragment();
-        vs.kill_child(document.querySelector("#champ_optionelle"))
-        let nombre = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value)
-        if (nombre) {
-            for (let i = 0; i < nombre; i++) {
-                const el = vs.form_name({
-                    id: data_send.procedural.id + i,
-                    name: data_send.procedural.name + i,
-                    erreur: data_send.procedural.erreur
-                })
-                
-                fragment_optional.appendChild(el) 
-            }
-        }
-        vs.add({
-            selecteur: "#champ_optionelle",
-            text: fragment_optional,
-        })
-    }, false)
-    document.getElementById('valid_form').addEventListener("click", function () {
-        let array_length = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value);      
-               
-        let resultat = "";
-        for (let i = 0; i < array_length; i++) {
-            resultat = resultat + "<p>Valeur ["+ i +"] : "+ this.parentNode.querySelector("#" + data_send.procedural.id + i).value + "<p>"
-        }
-
-        vs.modal_result(resultat)
-        
-        const event = new Event('change');
-        document.getElementById(data_send.taille.id).dispatchEvent(event);       
-        
-    }, false);
-}
+    vs.modal_result(resultat)
+    
+    const event = new Event('change');
+    document.getElementById(data_send.taille.id).dispatchEvent(event);       
+    
+}, false);

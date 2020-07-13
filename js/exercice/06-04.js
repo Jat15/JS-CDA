@@ -13,75 +13,74 @@ const def = {
         + `</ul>`
 }
 
-export function vue() {
-    const data_send = {
-        pu : {
-            id : "pu",
-            name : "Prix Unitaire",
-            pattern : "decimal_2"
-        },
-        qte : {
-            id : "qte",
-            name : "Quantité",
-            pattern : "entier_sup"
-        },
+
+const data_send = {
+    pu : {
+        id : "pu",
+        name : "Prix Unitaire",
+        pattern : "decimal_2"
+    },
+    qte : {
+        id : "qte",
+        name : "Quantité",
+        pattern : "entier_sup"
+    },
+}
+
+vs.form_start(def)
+
+vs.add(
+    {
+        selecteur : "#formulaire",
+        text : vs.form_name (data_send.pu)
+    }
+)
+vs.add(
+    {
+        selecteur : "#formulaire",
+        text : vs.form_name (data_send.qte)
+    }
+)
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function () {
+
+    //Prix a payer , port , remise, tot= prix total
+    let message = ""
+
+    if (verif_form.no_error()) {
+        let PAP = 0
+        let PORT = 0
+        let REM = 0
+
+        const PU = parseFloat(this.parentNode.querySelector("#" + data_send.pu.id).value)
+        const QTECOM = parseInt(this.parentNode.querySelector("#" + data_send.qte.id).value)
+        const TOT = QTECOM * PU
+
+        if (TOT >= 100 && TOT <= 200)
+            REM = TOT * (5 / 100)
+        else if (TOT > 200)
+            REM = TOT * (10 / 100)
+        
+        PAP = TOT - REM
+        
+        if (PAP > 500)
+            PORT = 0
+        else
+        {
+            PORT = PAP * (2 / 100)
+            if (PORT < 6)
+                PORT = 6 
+        }
+        
+        PAP = PAP + PORT
+
+        message = "<p>Prix HT : " + TOT.toFixed(2) + "€</p><p>Frais de port : " + PORT.toFixed(2) + "€</p><p>Remise : " + REM.toFixed(2) + "€</p><p>Prix TTC : " + PAP.toFixed(2) + "€</p>"
+    } else {
+        message = "<p>Remplissez correctement les champs</p>"
     }
 
-    vs.form_start(def)
+    vs.modal_result(message)
 
-    vs.add(
-        {
-            selecteur : "#formulaire",
-            text : vs.form_name (data_send.pu)
-        }
-    )
-    vs.add(
-        {
-            selecteur : "#formulaire",
-            text : vs.form_name (data_send.qte)
-        }
-    )
-
-    vs.form_end()
-
-    document.getElementById('valid_form').addEventListener("click", function () {
-
-        //Prix a payer , port , remise, tot= prix total
-        let message = ""
-
-        if (verif_form.no_error()) {
-            let PAP = 0
-            let PORT = 0
-            let REM = 0
-    
-            const PU = parseFloat(this.parentNode.querySelector("#" + data_send.pu.id).value)
-            const QTECOM = parseInt(this.parentNode.querySelector("#" + data_send.qte.id).value)
-            const TOT = QTECOM * PU
-
-            if (TOT >= 100 && TOT <= 200)
-                REM = TOT * (5 / 100)
-            else if (TOT > 200)
-                REM = TOT * (10 / 100)
-            
-            PAP = TOT - REM
-            
-            if (PAP > 500)
-                PORT = 0
-            else
-            {
-                PORT = PAP * (2 / 100)
-                if (PORT < 6)
-                    PORT = 6 
-            }
-            
-            PAP = PAP + PORT
-
-            message = "<p>Prix HT : " + TOT.toFixed(2) + "€</p><p>Frais de port : " + PORT.toFixed(2) + "€</p><p>Remise : " + REM.toFixed(2) + "€</p><p>Prix TTC : " + PAP.toFixed(2) + "€</p>"
-        } else {
-            message = "<p>Remplissez correctement les champs</p>"
-        }
-
-        vs.modal_result(message)
-
-    }, false)
-}
+}, false)

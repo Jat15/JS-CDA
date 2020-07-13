@@ -10,81 +10,78 @@ const def = {
         + `<p>Dans  le  cas  contraire,  le  programme  effectuera  l'opération  demandée  (en  prévoyant  le  cas  d'erreur "division par 0"), puis affichera le résultat.</p>`
 }
 
-export function vue() {
-    const data_send = {
-        nombre1 : {
-            id : "nombre1",
-            name : "Nombre",
-            pattern: "entier"
-        },
-        operateur : {
-            id : "operateur",
-            name : "Operateur",
-            pattern: "operateur"
-        },
-        nombre2 : {
-            id : "nombre2",
-            name : "Nombre",
-            pattern: "entier"
+const data_send = {
+    nombre1 : {
+        id : "nombre1",
+        name : "Nombre",
+        pattern: "entier"
+    },
+    operateur : {
+        id : "operateur",
+        name : "Operateur",
+        pattern: "operateur"
+    },
+    nombre2 : {
+        id : "nombre2",
+        name : "Nombre",
+        pattern: "entier"
+    }
+}
+
+vs.form_start(def)
+
+vs.add({
+    selecteur : "#formulaire",
+    text : vs.form_name (data_send.nombre1)
+})
+
+vs.add({
+    selecteur : "#formulaire",
+    text : vs.form_name (data_send.operateur)
+})
+
+vs.add({
+    selecteur : "#formulaire",
+    text : vs.form_name (data_send.nombre2)
+})
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function () {
+    let retour
+
+
+    if (verif_form.no_error()) {
+        let resultat
+        const nombres1 = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
+        const operateur = this.parentNode.querySelector("#" + data_send.operateur.id).value
+        const nombres2 = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
+
+        if (operateur == "/" && nombres2 == 0) {
+            retour = "Impossible de diviser par 0"
+        } else {
+            switch (operateur) {   
+                case "+" :
+                    resultat = nombres1 + nombres2
+                    break
+                case "-" :
+                    resultat = nombres1 - nombres2
+                    break
+                case "/" :
+                    resultat = nombres1 / nombres2
+                    break
+                case "*" :
+                    resultat = nombres1 * nombres2
+                    break
+            } 
+            retour = "Le résultat est : "+ resultat
         }
+    } else {
+        retour = "Remplissez correctement les champs"
     }
 
-    vs.form_start(def)
+    retour = "<p>" + retour + "</p>"
 
-    vs.add({
-        selecteur : "#formulaire",
-        text : vs.form_name (data_send.nombre1)
-    })
+    vs.modal_result(retour)
 
-    vs.add({
-        selecteur : "#formulaire",
-        text : vs.form_name (data_send.operateur)
-    })
-
-    vs.add({
-        selecteur : "#formulaire",
-        text : vs.form_name (data_send.nombre2)
-    })
-
-    vs.form_end()
-
-    document.getElementById('valid_form').addEventListener("click", function () {
-        let retour
-
-
-        if (verif_form.no_error()) {
-            let resultat
-            const nombres1 = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
-            const operateur = this.parentNode.querySelector("#" + data_send.operateur.id).value
-            const nombres2 = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
-
-            if (operateur == "/" && nombres2 == 0) {
-                retour = "Impossible de diviser par 0"
-            } else {
-                switch (operateur) {   
-                    case "+" :
-                        resultat = nombres1 + nombres2
-                        break
-                    case "-" :
-                        resultat = nombres1 - nombres2
-                        break
-                    case "/" :
-                        resultat = nombres1 / nombres2
-                        break
-                    case "*" :
-                        resultat = nombres1 * nombres2
-                        break
-                } 
-                retour = "Le résultat est : "+ resultat
-            }
-        } else {
-            retour = "Remplissez correctement les champs"
-        }
-
-        retour = "<p>" + retour + "</p>"
-
-        vs.modal_result(retour)
-
-    }, false)
-
-}
+}, false)

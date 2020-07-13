@@ -10,38 +10,35 @@ const def = {
         +`<p>Vous  devez  utiliser l’opérateur modulo «%» qui donne le reste d’une division. a%2 donne le reste de la division de apar 2, si ce reste est égale à zéro, aest divisible par 2.</p>`
 }
 
-export function vue() {
-    const data_send = {
-        nombre : {
-            id : "nombre",
-            name : "Nombre",
-            pattern: "entier"
-        }
+const data_send = {
+    nombre : {
+        id : "nombre",
+        name : "Nombre",
+        pattern: "entier"
     }
-
-    vs.form_start(def)
-
-    vs.add({
-        selecteur : "#formulaire",
-        text : vs.form_name (data_send.nombre)
-    })
-
-    vs.form_end()
-
-    document.getElementById('valid_form').addEventListener("click", function() {
-        let resultat
-
-        if ( verif_form.no_error() ) {
-            const nombre = this.parentNode.querySelector("#" + data_send.nombre.id).value
-
-            resultat = nombre%2 == 0 ? "Nombre pair" : "Nombre impair"
-        } else {
-            resultat = "Remplissez correctement le champ"
-        }
-        resultat = "<p>" + resultat + "</p>"
-
-        vs.modal_result(resultat)
-
-    }, false)
-
 }
+
+vs.form_start(def)
+
+vs.add({
+    selecteur : "#formulaire",
+    text : vs.form_name (data_send.nombre)
+})
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function() {
+    let resultat
+
+    if ( verif_form.no_error() ) {
+        const nombre = this.parentNode.querySelector("#" + data_send.nombre.id).value
+
+        resultat = nombre%2 == 0 ? "Nombre pair" : "Nombre impair"
+    } else {
+        resultat = "Remplissez correctement le champ"
+    }
+    resultat = "<p>" + resultat + "</p>"
+
+    vs.modal_result(resultat)
+
+}, false)

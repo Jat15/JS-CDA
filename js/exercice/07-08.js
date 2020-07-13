@@ -12,59 +12,57 @@ const def = {
         + `</ul>`
 }
 
-export function vue() {
-    const data_send = {
-        phrase: {
-            id: "phrase",
-            name: "Phrase",
-            erreur: "Nom pas bon !"
-        },
+const data_send = {
+    phrase: {
+        id: "phrase",
+        name: "Phrase",
+        erreur: "Nom pas bon !"
+    },
+}
+
+vs.form_start(def)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.phrase)
+    }
+)
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function () {
+    let phrase = this.parentNode.querySelector("#" + data_send.phrase.id).value;
+    
+    let nombre = 0;
+    let tentative_echoue = 0;
+    let decaler = 0;
+    
+    var voyelle = ["a","e","i","o","u","y"];
+    while (tentative_echoue < voyelle.length && phrase.length > 0)
+    {
+        if (decaler>0) 
+            phrase = phrase.substr(decaler);
+        
+        tentative_echoue = 0;
+        decaler = 0;
+        
+        for (var index_voyelle in voyelle) 
+        {
+            var trouver = phrase.indexOf(voyelle[index_voyelle]);
+            if ( trouver > -1)
+            {
+                nombre++;
+                if (trouver+1 > decaler)
+                    decaler = trouver+1;
+            }
+            else
+                tentative_echoue++;
+        }
     }
 
-    vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.phrase)
-        }
-    )
+    const message = "Vous avez " + nombre + " voyelle";
 
-    vs.form_end()
-
-    document.getElementById('valid_form').addEventListener("click", function () {
-        let phrase = this.parentNode.querySelector("#" + data_send.phrase.id).value;
-        
-        let nombre = 0;
-        let tentative_echoue = 0;
-        let decaler = 0;
-        
-        var voyelle = ["a","e","i","o","u","y"];
-        while (tentative_echoue < voyelle.length && phrase.length > 0)
-        {
-            if (decaler>0) 
-                phrase = phrase.substr(decaler);
-            
-            tentative_echoue = 0;
-            decaler = 0;
-            
-            for (var index_voyelle in voyelle) 
-            {
-                var trouver = phrase.indexOf(voyelle[index_voyelle]);
-                if ( trouver > -1)
-                {
-                    nombre++;
-                    if (trouver+1 > decaler)
-                        decaler = trouver+1;
-                }
-                else
-                    tentative_echoue++;
-            }
-        }
-
-
-        const message = "Vous avez " + nombre + " voyelle";
-
-        vs.modal_result(message)
-    }, false);
-}
+    vs.modal_result(message)
+}, false);

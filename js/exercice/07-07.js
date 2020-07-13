@@ -17,50 +17,48 @@ const def = {
     + `<p>On ne demande pas pour le moment de gérer les débordements (overflows) dus à des demandes de calcul dépassant la capacité de la machine.</p>`
 }
 
-export function vue() {
-    const data_send = {
-        nombre1: {
-            id: "nombre1",
-            name: "Table de 1 a",
-            erreur: "Nom pas bon !"
-        },
-        nombre2: {
-            id: "nombre2",
-            name: "Multiple",
-            erreur: "Nom pas bon !"
-        }
+const data_send = {
+    nombre1: {
+        id: "nombre1",
+        name: "Table de 1 a",
+        erreur: "Nom pas bon !"
+    },
+    nombre2: {
+        id: "nombre2",
+        name: "Multiple",
+        erreur: "Nom pas bon !"
+    }
+}
+
+vs.form_start(def)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nombre1)
+    }
+)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nombre2)
+    }
+)
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function () {
+    let resultat = ""
+    const repetition = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
+    const multiple = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
+
+    for (let i = 1; i <= repetition; i++)
+    {   
+        resultat +="<p>" + i + " x " + multiple + " = " + (i*multiple) + "</p>"
     }
 
-    vs.form_start(def)
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nombre1)
-        }
-    )
-
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nombre2)
-        }
-    )
-
-    vs.form_end()
-
-    document.getElementById('valid_form').addEventListener("click", function () {
-        let resultat = ""
-        const repetition = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
-        const multiple = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
-
-        for (let i = 1; i <= repetition; i++)
-        {   
-            resultat +="<p>" + i + " x " + multiple + " = " + (i*multiple) + "</p>"
-        }
-
-
-        vs.modal_result(resultat)
-        
-    }, false);
-}
+    vs.modal_result(resultat)
+    
+}, false);

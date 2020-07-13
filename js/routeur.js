@@ -13,7 +13,7 @@ if (!(c && e)) {
 
 //On charge la vue ou on met un message d'erreur
 import('./exercice/'+ c + '-' + e + '.js')
-      .then(x => x.vue())
+      .then(x => x)
      /* .catch(err => {
         alert("Erreur")
       })*/

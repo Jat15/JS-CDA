@@ -149,7 +149,7 @@ export function form_start(data){
             text : `<div>`
                     + `<h1>` + data.cours + `</h1>`
                     + `<h2>` + data.excercice + `</h2>`
-                    +`` + data.intitule + ``
+                    + data.intitule
                 + `</div>`
                 + `<form id="formulaire">`
                 + `</form>`

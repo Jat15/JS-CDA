@@ -15,50 +15,48 @@ const def = {
         + `</ul>`
 }
 
-export function vue() {
-    const data_send = {
-        nombre: {
-            id: "nombre",
-            name: "Nombre",
-            erreur: "Nom pas bon !"
+const data_send = {
+    nombre: {
+        id: "nombre",
+        name: "Nombre",
+        erreur: "Nom pas bon !"
+    }
+}
+
+vs.form_start(def)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nombre)
+    }
+)
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function () {
+    let N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
+    let message = "";
+
+    function multiplication(multiple)
+    {
+        let phrase = "";  
+        for (let i = 1; i <= 10; i++)
+        {   
+            phrase = "<p>" + phrase + i + " x " + multiple + " = " + (i * multiple) + "</p>";
         }
+        return phrase;
     }
 
-    vs.form_start(def)
+    let nombres = new RegExp("^-?[0-9]{1,}$");
 
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nombre)
-        }
-    )
+    if ( nombres.test(N) ) {
+        N = parseInt(N);
+        message = multiplication(N);
+    } else {
+        message = "<p>Nombre entier positif ou négatif</p>";
+    }
 
-    vs.form_end()
+    vs.modal_result(message)
 
-    document.getElementById('valid_form').addEventListener("click", function () {
-        let N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
-        let message = "";
-
-        function multiplication(multiple)
-        {
-            let phrase = "";  
-            for (let i = 1; i <= 10; i++)
-            {   
-                phrase = "<p>" + phrase + i + " x " + multiple + " = " + (i * multiple) + "</p>";
-            }
-            return phrase;
-        }
-    
-        let nombres = new RegExp("^-?[0-9]{1,}$");
-    
-        if ( nombres.test(N) ) {
-            N = parseInt(N);
-            message = multiplication(N);
-        } else {
-            message = "<p>Nombre entier positif ou négatif</p>";
-        }
-
-        vs.modal_result(message)
-
-    }, false);
-}
+}, false);

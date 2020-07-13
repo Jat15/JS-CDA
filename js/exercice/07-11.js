@@ -11,42 +11,40 @@ const def = {
     + `<p>Utilisez alert pour afficher les messages «Trop grand» ou «Trop petit», promptpour demander une valeur à l’utilisateur et confirmpour lui demander de rejouer.</p>`
 }
 
-export function vue() {
-    const data_send = {
-        nombre: {
-            id: "nombre",
-            name: "Nombre",
-            erreur: "Nom pas bon !"
-        },
-    }
-    let nombre_magic = parseInt(Math.random()*100);
-
-    vs.form_start(def)
-
-    vs.add(
-        {
-            selecteur: "#formulaire",
-            text: vs.form_name(data_send.nombre)
-        }
-    )
-
-    vs.form_end()
-
-    document.getElementById('valid_form').addEventListener("click", function () {
-        const nombre_utilisateur = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
-        let message = ""
-
-        if (nombre_magic > nombre_utilisateur)
-            message = "Le nombre magique est plus grand"
-        else if (nombre_magic < nombre_utilisateur)
-            message = "Le nombre magique est petit"
-        else
-        {
-            message = "Bravo !!!!"
-            nombre_magic = parseInt(Math.random()*100)
-        }
-       
-        message = "<p>" + message + "</p>"
-        vs.modal_result(message)
-    }, false);
+const data_send = {
+    nombre: {
+        id: "nombre",
+        name: "Nombre",
+        erreur: "Nom pas bon !"
+    },
 }
+let nombre_magic = parseInt(Math.random()*100);
+
+vs.form_start(def)
+
+vs.add(
+    {
+        selecteur: "#formulaire",
+        text: vs.form_name(data_send.nombre)
+    }
+)
+
+vs.form_end()
+
+document.getElementById('valid_form').addEventListener("click", function () {
+    const nombre_utilisateur = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
+    let message = ""
+
+    if (nombre_magic > nombre_utilisateur)
+        message = "Le nombre magique est plus grand"
+    else if (nombre_magic < nombre_utilisateur)
+        message = "Le nombre magique est petit"
+    else
+    {
+        message = "Bravo !!!!"
+        nombre_magic = parseInt(Math.random()*100)
+    }
+    
+    message = "<p>" + message + "</p>"
+    vs.modal_result(message)
+}, false);
