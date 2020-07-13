@@ -40,8 +40,8 @@ document.getElementById('valid_form').addEventListener("click", function () {
 
     if (verif_form.no_error()) {
         let resultat = 0
-        let nombre1 = parseInt(this.parentNode.querySelector("#"+data_send.nombre1.id).value)
-        let nombre2 = parseInt(this.parentNode.querySelector("#"+data_send.nombre2.id).value)
+        let nombre1 = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
+        let nombre2 = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
 
         if (nombre1 > nombre2) {
             const mem = nombre1

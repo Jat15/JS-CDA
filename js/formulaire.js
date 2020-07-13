@@ -87,8 +87,8 @@ export function create_event(id) {
 */
 export function no_error() {
     let no_error = true
-   
-    no_error = document.querySelectorAll("input[data-vs-form-pattern]").forEach( input => affichage(input.id)) && no_error
+
+    document.querySelectorAll("input[data-vs-form-pattern]").forEach( input => no_error = affichage(input.id) && no_error )
 
     return no_error
 }

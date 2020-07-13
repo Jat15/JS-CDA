@@ -29,7 +29,7 @@ document.getElementById('valid_form').addEventListener("click", function () {
     let resultat = ""
 
     if (verif_form.no_error()) {   
-        const nombre = parseInt(this.parentNode.getElementById(data_send.nombre.id).value)
+        const nombre = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
     
         for (let i = nombre ; i>0 ; i--) {   
             resultat += (nombre != i) ? "<p>" + i + "</p>" : "<p> Les inférieur a " + nombre + " sont: </p>"

@@ -30,7 +30,7 @@ document.getElementById('valid_form').addEventListener("click", function () {
     
     if (verif_form.no_error()) {
         let R = 0
-        const N = parseInt(this.parentNode.getElementById(data_send.nombre.id).value)
+        const N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
 
         for(let i = (N - 1) ; i > 0 ; i--) {
             R = i + R

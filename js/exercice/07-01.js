@@ -33,7 +33,7 @@ document.getElementById('valid_form').addEventListener("click", function () {
     let message
 
     if (verif_form.no_error()) {     
-        let prenom = this.parentNode.getElementById(data_send.prenom.id).value
+        let prenom = this.parentNode.querySelector("#" + data_send.prenom.id).value
         
         if (prenom) {
             liste_prenom.push(prenom)
@@ -46,7 +46,6 @@ document.getElementById('valid_form').addEventListener("click", function () {
                     message += "<p>" + prenom + "</p>"
                 }
             )
-
             liste_prenom = []
         }
     } else {
