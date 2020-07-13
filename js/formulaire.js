@@ -1,5 +1,3 @@
-export let error_array = {}
-
 /*
 Les regex + message d'erreurs par défaut
 */
@@ -69,41 +67,28 @@ function affichage(id) {
 
         if(regex[regex_index].pattern.test(value)) {
             element.parentNode.classList.remove("is-invalid")
-            error_array[id] = true
+            return true
         } else {
             element.parentNode.classList.add("is-invalid")
-            error_array[id] = false
+            return false
         }
 }
 
 /*
     Création de l'event et de sa valeur dans le tableau
 */
-export function create_event(id){
+export function create_event(id) {
     document.getElementById(id).addEventListener("keyup", function() {affichage(id)})
-    error_array[id] = false
 }
 
 /*
-    Met a jour le tableau des erreurs
-    Calcule tout les boolean du tableau
-    Si ces vraie tout les valeur sont remis sur "faux"
-    Renvoie la boolean 
+    vérification des champ et retour de la boolean en comparent aux ancien champs
+    
 */
-export function no_error(){
-   
-    document.querySelectorAll("input[data-vs-form-pattern]").forEach( input => affichage(input.id))
+export function no_error() {
     let no_error = true
-
-    Object.values(error_array).forEach(function(input) {
-        no_error = input && no_error
-    })
-
-    if (no_error) {
-        Object.keys(error_array).forEach(function(cle) {
-            error_array[cle] = false
-        })
-    }
+   
+    no_error = document.querySelectorAll("input[data-vs-form-pattern]").forEach( input => affichage(input.id)) && no_error
 
     return no_error
 }
