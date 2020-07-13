@@ -108,33 +108,29 @@ export function kill_child(selecteur) {
     De la div pour la modale
 */
 export function form_end() {
-    add(
-        {
-            selecteur: "#formulaire",
-            text:form_button({
-                name: "Submit",
-                id: "valid_form"
-            })
-        }
-    )
+    add({
+        selecteur: "#formulaire",
+        text:form_button({
+            name: "Submit",
+            id: "valid_form"
+        })
+    })
 
-    add(
-        {
-            selecteur: "#vs-contenue",
-            text: `<div id="dialog" class="mdl-dialog">`
-                    + `<div class="vs-test-dialog">`
-                        + `<h3 class="mdl-dialog__title">Resultat</h3>`
-                            + `<div class="mdl-dialog__content">`
-                                + `<div id="resultat">`
-                                + `</div>`
+    add({
+        selecteur: "#vs-contenue",
+        text: `<div id="dialog" class="mdl-dialog">`
+                + `<div class="vs-test-dialog">`
+                    + `<h3 class="mdl-dialog__title">Resultat</h3>`
+                        + `<div class="mdl-dialog__content">`
+                            + `<div id="resultat">`
                             + `</div>`
-                        + `<div class="mdl-dialog__actions">`
-                            + `<a type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="#">Close</a>`
                         + `</div>`
+                    + `<div class="mdl-dialog__actions">`
+                        + `<a type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="#">Close</a>`
                     + `</div>`
                 + `</div>`
-        }
-    )
+            + `</div>`
+    })
 }
 
 
@@ -143,19 +139,16 @@ export function form_end() {
     Et de form
 */
 export function form_start(data){
-    add (
-        {
-            selecteur : "#vs-contenue",
-            text : `<div>`
-                    + `<h1>` + data.cours + `</h1>`
-                    + `<h2>` + data.excercice + `</h2>`
-                    + data.intitule
-                + `</div>`
-                + `<form id="formulaire">`
-                + `</form>`
-        }
-    )
-
+    add ({
+        selecteur : "#vs-contenue",
+        text : `<div>`
+                + `<h1>` + data.cours + `</h1>`
+                + `<h2>` + data.excercice + `</h2>`
+                + data.intitule
+            + `</div>`
+            + `<form id="formulaire">`
+            + `</form>`
+    })
 }
 
 
