@@ -29,6 +29,26 @@ export const regex = {
     nom_propre_rien: {
         pattern: /^([A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}([- ']{1}[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{1}[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]{0,}){0,})$|^$/,
         message: "Les lettre et les espace, ', - sont autorisé. Ou rien pour valider."
+    },
+    phrase: {
+        pattern: /^.+$/,
+        message: "Accepte tout et n'importe quoi"
+    },
+    lettre: {
+        pattern: /^[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]$|^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]$/,
+        message: "Accepte une lettre"
+    },
+    symbole: {
+        pattern: /^\W$/,
+        message: "Accepte tout les symbole."
+    },
+    entier_separe: {
+        pattern: /^-?[0-9]+(\s{1}-?[0-9]+)*$/,
+        message: "Entier positif et négatif, séparé par un espace."
+    },
+    lettres: {
+        pattern: /^([A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*|[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]*)+$/,
+        message: "Des lettres."
     }
 }
 
@@ -85,10 +105,12 @@ export function create_event(id) {
     vérification des champ et retour de la boolean en comparent aux ancien champs
     
 */
-export function no_error() {
+export function no_error(id) {
     let no_error = true
-
-    document.querySelectorAll("input[data-vs-form-pattern]").forEach( input => no_error = affichage(input.id) && no_error )
+    let area = document
+    if (id)
+        area = document.querySelector("#" + id)
+    area.querySelectorAll("input[data-vs-form-pattern]").forEach( input => no_error = affichage(input.id) && no_error )
 
     return no_error
 }
