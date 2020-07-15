@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "08 - Fonctions",
@@ -18,12 +19,12 @@ const data_send = {
             x: {
                 id: "x",
                 name: "X",
-                erreur: "Nom pas bon !"
+                pattern: "entier"
             },
             y: {
                 id: "y",
                 name: "Y",
-                erreur: "Nom pas bon !"
+                pattern: "entier"
             },
             button: {
                 id: "multiple_valid",
@@ -43,13 +44,13 @@ const data_send = {
             nombre: {
                 id: "nombre",
                 name: "Nombre",
-                erreur: "Nom pas bon !"
+                pattern: "entier"
             }
         }
     },
     voyelle: {
         id: "voyelle",
-        name: "Recherche du nombre de voyelles",
+        name: "Nombre de voyelles",
         page: {
             id: "page_voyelle",
             button: {
@@ -59,13 +60,13 @@ const data_send = {
             var0: {
                 id: "phrase_voyelle",
                 name: "Phrase",
-                erreur: "Nom pas bon !"
+                pattern: "phrase"
             }
         }
     },
     caractere: {
         id: "caractere",
-        name: "Recherche du nombre des caracteres choisi",
+        name: "Nombre de caractere",
         page: {
             id: "page_caractere",
             button: {
@@ -75,12 +76,12 @@ const data_send = {
             var0: {
                 id: "phrase_caractere",
                 name: "Phrase",
-                erreur: "Nom pas bon !"
+                pattern: "phrase"
             },
             var1: {
                 id: "lettre_caractere",
                 name: "lettres",
-                erreur: "Nom pas bon !"
+                pattern: "lettres"
             }
         }
     },
@@ -93,158 +94,132 @@ const data_send = {
 
 let liste_nombre = []
 
-vs.form_start(def)
+// création des variables
+let fragment = document.createDocumentFragment()
+let el
 
-//Div header
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_button(data_send.menu)
-    }
-)
+//Header
+el = document.createElement("div")
+el.id = "vs_header_content"
+fragment.appendChild(el)
+
+el = document.createElement("h1")
+el.textContent = def.cours
+fragment.querySelector("div").appendChild(el)
+
+el = document.createElement("h2")
+el.textContent = def.excercice
+fragment.querySelector("div").appendChild(el)
+
+vs.add({
+    selecteur: "#vs-contenue",
+    text: fragment
+})
+
+vs.add({
+    selecteur: "#vs_header_content",
+    text: def.intitule
+})
+
+fragment = document.createDocumentFragment()
+
+el = vs.form_button(data_send.menu)
+fragment.appendChild(el)
 
 // Div Menu
+el = document.createElement("div")
+el.id = "page_menu"
+el.className = "mdl-grid"
+fragment.appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: `<div id="page_menu"></div>`
-    }
-)
 
-vs.add(
-    {
-        selecteur: "#page_menu",
-        text: vs.form_button(data_send.multiple)
-    }
-)
-vs.add(
-    {
-        selecteur: "#page_menu",
-        text: vs.form_button(data_send.somme)
-    }
-)
-vs.add(
-    {
-        selecteur: "#page_menu",
-        text: vs.form_button(data_send.voyelle)
-    }
-)
-vs.add(
-    {
-        selecteur: "#page_menu",
-        text: vs.form_button(data_send.caractere)
-    }
-)
+el = vs.form_button(data_send.multiple)
+el.querySelector("button").className =  el.querySelector("button").className + " mdl-cell mdl-cell--12-col"
+fragment.querySelector("#page_menu").appendChild(el)
+
+
+el = vs.form_button(data_send.somme)
+el.querySelector("button").className =  el.querySelector("button").className + " mdl-cell mdl-cell--12-col"
+fragment.querySelector("#page_menu").appendChild(el)
+
+
+el = vs.form_button(data_send.voyelle)
+el.querySelector("button").className =  el.querySelector("button").className + " mdl-cell mdl-cell--12-col"
+fragment.querySelector("#page_menu").appendChild(el)
+
+el = vs.form_button(data_send.caractere)
+el.querySelector("button").className =  el.querySelector("button").className + " mdl-cell mdl-cell--12-col"
+fragment.querySelector("#page_menu").appendChild(el)
 
 
 //Div multiple
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: `<div id="` + data_send.multiple.page.id + `"></div>`
-    }
-)
+el = document.createElement("form")
+el.id = data_send.multiple.page.id
+fragment.appendChild(el)
 
+el = vs.form_name(data_send.multiple.page.x)
+fragment.querySelector("#" + data_send.multiple.page.id).appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.multiple.page.id,
-        text: vs.form_name(data_send.multiple.page.x)
-    }
-)
+el = vs.form_name(data_send.multiple.page.y)
+fragment.querySelector("#" + data_send.multiple.page.id).appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.multiple.page.id,
-        text: vs.form_name(data_send.multiple.page.y)
-    }
-)
+el = vs.form_button(data_send.multiple.page.button)
+fragment.querySelector("#" + data_send.multiple.page.id).appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.multiple.page.id,
-        text: vs.form_button(data_send.multiple.page.button)
-    }
-)
 
 //Div somme
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: `<div id="` + data_send.somme.page.id + `"></div>`
-    }
-)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.somme.page.id,
-        text: vs.form_name(data_send.somme.page.nombre)
-    }
-)
+el = document.createElement("form")
+el.id = data_send.somme.page.id
+fragment.appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.somme.page.id,
-        text: vs.form_button(data_send.somme.page.button)
-    }
-)
+el = vs.form_name(data_send.somme.page.nombre)
+fragment.querySelector("#" + data_send.somme.page.id).appendChild(el)
+
+el = vs.form_button(data_send.somme.page.button)
+fragment.querySelector("#" + data_send.somme.page.id).appendChild(el)
+
 
 //Div voyelle
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: `<div id="` + data_send.voyelle.page.id + `"></div>`
-    }
-)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.voyelle.page.id,
-        text: vs.form_name(data_send.voyelle.page.var0)
-    }
-)
+el = document.createElement("form")
+el.id = data_send.voyelle.page.id
+fragment.appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.voyelle.page.id,
-        text: vs.form_button(data_send.voyelle.page.button)
-    }
-) 
+el = vs.form_name(data_send.voyelle.page.var0)
+fragment.querySelector("#" + data_send.voyelle.page.id).appendChild(el)
 
+el = vs.form_button(data_send.voyelle.page.button)
+fragment.querySelector("#" + data_send.voyelle.page.id).appendChild(el)
 
 //Div caractère
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: `<div id="` + data_send.caractere.page.id + `"></div>`
-    }
-)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.caractere.page.id,
-        text: vs.form_name(data_send.caractere.page.var0)
-    }
-)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.caractere.page.id,
-        text: vs.form_name(data_send.caractere.page.var1)
-    }
-)
+el = document.createElement("form")
+el.id = data_send.caractere.page.id
+fragment.appendChild(el)
 
-vs.add(
-    {
-        selecteur: "#" + data_send.caractere.page.id,
-        text: vs.form_button(data_send.caractere.page.button)
-    }
-) 
+el = vs.form_name(data_send.caractere.page.var0)
+fragment.querySelector("#" + data_send.caractere.page.id).appendChild(el)
+
+el = vs.form_name(data_send.caractere.page.var1)
+fragment.querySelector("#" + data_send.caractere.page.id).appendChild(el)
+
+el = vs.form_button(data_send.caractere.page.button)
+fragment.querySelector("#" + data_send.caractere.page.id).appendChild(el)
+
+
+//Envoie du corp
+
+vs.add({
+    selecteur: "#vs-contenue",
+    text: fragment
+})
+
 
 vs.add(
     {
@@ -302,11 +277,15 @@ document.getElementById(data_send.multiple.page.button.id).addEventListener("cli
         function produit(x,y) {
             return "<p>Le produit de " + x + " x " + y + " est égale à "+  ( x * y ) + "</p>"
         }
+        let message
+        if (verif_form.no_error(data_send.multiple.page.id)) { 
+            const x = parseInt(this.parentNode.querySelector("#" + data_send.multiple.page.x.id).value)
+            const y = parseInt(this.parentNode.querySelector("#" + data_send.multiple.page.y.id).value)
 
-        let x = parseInt(this.parentNode.querySelector("#" + data_send.multiple.page.x.id).value)
-        let y = parseInt(this.parentNode.querySelector("#" + data_send.multiple.page.y.id).value)
-
-        const message = produit(x,y)
+            message = produit(x,y)
+        } else {
+            message = "<p>Remplissez correctement le champ</p>"
+        }
 
         vs.modal_result(message)          
     }
@@ -315,16 +294,6 @@ document.getElementById(data_send.multiple.page.button.id).addEventListener("cli
 //somme
 document.getElementById(data_send.somme.page.button.id).addEventListener("click", function () {
     function somme_moyenne() {
-
-    }
-
-    let nombre = parseInt(this.parentNode.querySelector("#" + data_send.somme.page.nombre.id).value);
-
-        
-    if (nombre != 0 ) {
-        liste_nombre.push(nombre)
-        document.querySelector("form").reset()
-    } else {
         let resultat = 0
 
         liste_nombre.forEach(
@@ -332,12 +301,26 @@ document.getElementById(data_send.somme.page.button.id).addEventListener("click"
                 resultat = resultat + n
             }
         )
-
-        const message = "<p>La somme est : "+resultat+". La moyenne est " + (resultat/liste_nombre.length) + "</p>"
-        vs.modal_result(message)
-
+        message = "<p>La somme est : " + resultat + ". La moyenne est " + (resultat/liste_nombre.length) + "</p>"
         liste_nombre = []
+        return message
     }
+    let message
+
+    if (verif_form.no_error(data_send.somme.page.id)) {    
+        let nombre = parseInt(this.parentNode.querySelector("#" + data_send.somme.page.nombre.id).value);
+        if (nombre != 0 ) {
+            liste_nombre.push(nombre)
+            document.querySelector("#" + data_send.somme.page.id).reset()
+        } else {
+           message = somme_moyenne()
+        }
+    } else {
+        message = "<p>Remplissez correctement le champ</p>"
+    }
+    
+    if (message)
+        vs.modal_result(message)
 
     }
 )
@@ -363,16 +346,18 @@ function nombre_lettre(phrase, lettre) {
 
 //voyelle
 document.getElementById(data_send.voyelle.page.button.id).addEventListener("click", function () {
-        let p = this.parentNode.querySelector("#" + data_send.voyelle.page.var0.id).value
-        let voyelle = "aeiouy"
-
         let resultat = 0
 
-        for (var i in voyelle) {
-            resultat = resultat + nombre_lettre(p,voyelle[i])
-        }
-
-        resultat = "<p>" + resultat + "</p>"
+        if (verif_form.no_error(data_send.voyelle.page.id)) {
+            let p = this.parentNode.querySelector("#" + data_send.voyelle.page.var0.id).value
+            let voyelle = "aeiouy"
+            for (var i in voyelle) {
+                resultat = resultat + nombre_lettre(p,voyelle[i])
+            }
+            resultat = "<p>" + resultat + "</p>"
+        } else {
+            message = "<p>Remplissez correctement le champ</p>"
+        }    
 
         vs.modal_result(resultat)          
     }
@@ -380,17 +365,18 @@ document.getElementById(data_send.voyelle.page.button.id).addEventListener("clic
 
 //caractere
 document.getElementById(data_send.caractere.page.button.id).addEventListener("click", function () {
-        let p = this.parentNode.querySelector("#" + data_send.caractere.page.var0.id).value
-        let l = this.parentNode.querySelector("#" + data_send.caractere.page.var1.id).value
-
         let resultat = 0
 
-        for (var i in l) {
-            resultat = resultat + nombre_lettre(p,l[i])
-        }
-
-        resultat = "<p>" + resultat + "</p>"
-
+        if (verif_form.no_error(data_send.caractere.page.id)) {
+            let p = this.parentNode.querySelector("#" + data_send.caractere.page.var0.id).value
+            let l = this.parentNode.querySelector("#" + data_send.caractere.page.var1.id).value
+            for (var i in l) {
+                resultat = resultat + nombre_lettre(p,l[i])
+            }
+            resultat = "<p>" + resultat + "</p>"
+        } else {
+            message = "<p>Remplissez correctement les champs</p>"
+        } 
 
         vs.modal_result(resultat)          
     }
