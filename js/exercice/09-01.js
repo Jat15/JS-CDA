@@ -49,7 +49,7 @@ document.getElementById(data_send.taille.id).addEventListener("change", function
             const el = vs.form_name({
                 id: data_send.procedural.id + i,
                 name: data_send.procedural.name + i,
-                erreur: data_send.procedural.erreur
+                pattern: data_send.procedural.pattern
             })
             
             fragment_optional.appendChild(el) 

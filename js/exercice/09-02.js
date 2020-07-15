@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "09 - Tableaux",
@@ -28,12 +29,12 @@ const data_send = {
         taille: {
             id: "taille",
             name: "Taille du tableau",
-            erreur: "Nom pas bon !"
+            pattern: "entier_sup"
         },
         procedural: {
             id: "test_",
             name: "Champ ",
-            erreur: "Nom pas bon !"
+            pattern: "entier"
         },
         bouton_valid:{
             id: "create_table_valid",
@@ -64,7 +65,7 @@ const data_send = {
         var0: {
             id: "index",
             name: "Index",
-            erreur: "Nom pas bon !"
+            pattern: "entier_zero_sup"
         },
         bouton_valid:{
             id: "index_valid",
@@ -79,109 +80,79 @@ const data_send = {
 
 let main_table = []
 
-vs.form_start(def)
+vs.add ({
+    selecteur : "#vs-contenue",
+    text : `<div>`
+            + `<h1>` + def.cours + `</h1>`
+            + `<h2>` + def.excercice + `</h2>`
+            + def.intitule
+        + `</div>`
+})
 
 //Création de la table InitTab()
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text:`<div id="` + data_send.create_table.id + `"><div>`
-    }
-)
 
-
-vs.add(
-    {
-        selecteur: "#" + data_send.create_table.id,
-        text: vs.form_name(data_send.create_table.taille)
-    }
-)
-
-vs.add(
-    {
-        selecteur: "#" + data_send.create_table.id,
-        text:`
-            <div id="champ_optionelle"><div>
-        `
-    }
-)
-
-vs.add(
-    {
-        selecteur: "#" + data_send.create_table.id,
-        text: vs.form_button(data_send.create_table.bouton_valid)
-    }
-)
-
-
+vs.add({
+    selecteur: "#vs-contenue",
+    text:`<form id="` + data_send.create_table.id + `"><form>`
+})
+vs.add({
+    selecteur: "#" + data_send.create_table.id,
+    text: vs.form_name(data_send.create_table.taille)
+})
+vs.add({
+    selecteur: "#" + data_send.create_table.id,
+    text:`<div id="champ_optionelle"><div>`
+})
+vs.add({
+    selecteur: "#" + data_send.create_table.id,
+    text: vs.form_button(data_send.create_table.bouton_valid)
+})
 
 //Menu
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text:`<div id="` + data_send.menu.id + `"><div>`
-    }
-)
-vs.add(
-    {
-        selecteur: "#" + data_send.menu.id,
-        text: vs.form_button(data_send.menu.back_create_table)
-    }
-)
-
-vs.add(
-    {
-        selecteur: "#" + data_send.menu.id,
-        text: vs.form_button(data_send.menu.bouton0)
-    }
-)
-
-vs.add(
-    {
-        selecteur: "#" + data_send.menu.id,
-        text: vs.form_button(data_send.menu.bouton1)
-    }
-)
-
-vs.add(
-    {
-        selecteur: "#" + data_send.menu.id,
-        text: vs.form_button(data_send.menu.bouton2)
-    }
-)
+vs.add({
+    selecteur: "#vs-contenue",
+    text:`<div id="` + data_send.menu.id + `"><div>`
+})
+vs.add({
+    selecteur: "#" + data_send.menu.id,
+    text: vs.form_button(data_send.menu.back_create_table)
+})
+vs.add({
+    selecteur: "#" + data_send.menu.id,
+    text: vs.form_button(data_send.menu.bouton0)
+})
+vs.add({
+    selecteur: "#" + data_send.menu.id,
+    text: vs.form_button(data_send.menu.bouton1)
+})
+vs.add({
+    selecteur: "#" + data_send.menu.id,
+    text: vs.form_button(data_send.menu.bouton2)
+})
 
 //Demande de l'index
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text:`<div id="` + data_send.index.id + `"><div>`
-    }
-)
-vs.add(
-    {
-        selecteur: "#" + data_send.index.id,
-        text: vs.form_button(data_send.index.back_menu)
-    }
-)
+vs.add({
+    selecteur: "#vs-contenue",
+    text:`<form id="` + data_send.index.id + `"><form>`
+})
+vs.add({
+    selecteur: "#" + data_send.index.id,
+    text: vs.form_button(data_send.index.back_menu)
+})
 
-vs.add(
-    {
-        selecteur: "#" + data_send.index.id,
-        text: vs.form_name(data_send.index.var0)
-    }
-)
+vs.add({
+    selecteur: "#" + data_send.index.id,
+    text: vs.form_name(data_send.index.var0)
+})
 
-vs.add(
-    {
-        selecteur: "#" + data_send.index.id,
-        text: vs.form_button(data_send.index.bouton_valid)
-    }
-)
+vs.add({
+    selecteur: "#" + data_send.index.id,
+    text: vs.form_button(data_send.index.bouton_valid)
+})
 
-vs.add(
-    {
+vs.add({
         selecteur: "#vs-contenue",
         text: `<div id="dialog" class="mdl-dialog">
             <div class="vs-test-dialog">
@@ -194,10 +165,7 @@ vs.add(
             </div>
             </div>
         </div>`
-    }
-);
-
-
+});
 
 const menu_nav = [
     [
@@ -234,24 +202,24 @@ toggle_page(menu_nav[1][0])
 
 //InitTab()
 document.getElementById(data_send.create_table.taille.id).addEventListener("change", function () {
+    let fragment_optional = document.createDocumentFragment();
     vs.kill_child(document.querySelector("#champ_optionelle"))
-    let nombre = parseInt(this.parentNode.querySelector("#" + data_send.create_table.taille.id).value)
+    let nombre = parseInt(this.parentNode.querySelector("#" +data_send.create_table.taille.id).value)
     if (nombre) {
         for (let i = 0; i < nombre; i++) {
-            vs.add(
-                {
-                    selecteur: "#champ_optionelle",
-                    text: vs.form_name({
-                        id: data_send.create_table.procedural.id + i,
-                        name: data_send.create_table.procedural.name + i,
-                        erreur: data_send.create_table.procedural.erreur
-                    })
-                }
-            )
+            const el = vs.form_name({
+                id: data_send.create_table.procedural.id + i,
+                name: data_send.create_table.procedural.name + i,
+                pattern: data_send.create_table.procedural.pattern
+            })
+            
+            fragment_optional.appendChild(el) 
         }
-        
     }
-
+    vs.add({
+        selecteur: "#champ_optionelle",
+        text: fragment_optional,
+    })
 }, false)
 
 //SaisieTab()
@@ -280,14 +248,13 @@ document.getElementById(data_send.menu.bouton0.id).addEventListener("click", fun
 
 //InfoTab()
 document.getElementById(data_send.menu.bouton2.id).addEventListener("click", function () {
+    let resultat
+    
     let moyenne = 0;
-
     for(let i in main_table)
         moyenne += main_table[i]
-
     moyenne /= main_table.length
-
-    const resultat = "<p>Le maximum est " + Math.max(...main_table) + " et la moyenne est " + moyenne
+    resultat = "<p>Le maximum est " + Math.max(...main_table) + " et la moyenne est " + moyenne
 
     vs.modal_result(resultat)
 
@@ -297,12 +264,15 @@ document.getElementById(data_send.menu.bouton2.id).addEventListener("click", fun
 //RechercheTab()
 
 document.getElementById(data_send.index.bouton_valid.id).addEventListener("click", function () {
-    let n = parseInt(this.parentNode.querySelector("#" + data_send.index.var0.id).value)
-    let resultat;
+    let resultat
 
-    resultat = (n >= 0 && n < main_table.length) ? main_table[n] : "Poste invalide, le nombre doit êtres compris entre 0 et " + (parseInt(main_table.length) - 1)
-
-    resultat = "<p>" + resultat + "</p>"
+    if (verif_form.no_error(data_send.index.bouton_valid.id)) {
+        let n = parseInt(this.parentNode.querySelector("#" + data_send.index.var0.id).value)
+        resultat = (n >= 0 && n < main_table.length) ? main_table[n] : "Poste invalide, le nombre doit êtres compris entre 0 et " + (parseInt(main_table.length) - 1)
+        resultat = "<p>" + resultat + "</p>"
+    } else {
+        resultat = "<p>Remplissez correctement le champ</p>"
+    }
 
     vs.modal_result(resultat)
 }, false)
