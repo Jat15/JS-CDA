@@ -110,7 +110,7 @@ export function kill_child(selecteur) {
 export function form_end() {
     add({
         selecteur: "#formulaire",
-        text:form_button({
+        text: form_button({
             name: "Submit",
             id: "valid_form"
         })
@@ -166,7 +166,7 @@ export function modal_result(message) {
     kill_child(document.querySelector("#resultat"))
 
     document.querySelector("#resultat").insertAdjacentHTML('beforeend', message)
-    document.querySelector("form").reset()
+    document.querySelectorAll("form").forEach( input => input.reset())
     window.location = ("" + window.location).replace(/#[A-Za-z0-9_]*$/, '') + "#dialog" 
 
     let element = document.querySelectorAll(".is-dirty")
