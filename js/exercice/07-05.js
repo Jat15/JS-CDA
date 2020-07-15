@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -11,11 +12,11 @@ const data_send = {
     nombre: {
         id: "nombre",
         name: "Nombre",
-        erreur: "Nom pas bon !"
+        pattern: "entier_zero_sup"
     }
 }
 
-let liste_nombre = [];
+let liste_nombre = []
 
 vs.form_start(def)
 
@@ -27,25 +28,31 @@ vs.add({
 vs.form_end()
 
 document.getElementById('valid_form').addEventListener("click", function () {
-    let nombre = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
+    let message
+    
+    if (verif_form.no_error()) {
+        let nombre = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
 
-    if (nombre != 0 ) {
-        liste_nombre.push(nombre)
-        this.parentNode.reset();
+        if (nombre != 0 ) {
+            liste_nombre.push(nombre)
+            this.parentNode.reset()
+        } else {
+            let resultat = 0
+
+            liste_nombre.forEach(
+                function(n) {
+                    resultat = resultat + n
+                }
+            )
+
+            message = "<p>La somme est : "+resultat+". La moyenne est " + (resultat/liste_nombre.length) + "</p>"
+            liste_nombre = []
+        }
     } else {
-        let resultat = 0;
-
-        liste_nombre.forEach(
-            function(n) {
-                resultat = resultat + n;
-            }
-        )
-
-        const message = "<p>La somme est : "+resultat+". La moyenne est " + (resultat/liste_nombre.length) + "</p>";
-        vs.modal_result(message)
-
-        liste_nombre = [];
+        message = "<p>Remplissez correctement les champs</p>"
     }
 
+    if (message)
+        vs.modal_result(message)
 
-}, false);
+}, false)

@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -11,50 +12,56 @@ const data_send = {
     nombre: {
         id: "nombre",
         name: "Nombre",
-        erreur: "Nom pas bon !"
+        pattern: "entier_zero_sup"
     }
 }
 
-let liste_nombre = [];
+let liste_nombre = []
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.nombre)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.nombre)
+})
 
 vs.form_end()
 
-document.getElementById('valid_form').addEventListener("click", function () {
-    let nombre = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
+document.getElementById('valid_form').addEventListener("click", function (e) {
+    let message = ""
 
-    if (nombre != 0 ) {
-        liste_nombre.push(nombre)
-        this.parentNode.reset();
-    } else {
-        let min;
-        let max;
+    if (verif_form.no_error()) {
+        let nombre = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
 
-        liste_nombre.forEach(
-            function(N) {
-                if (isNaN(min) && isNaN(max)) {
-                    min = N;
-                    max = N;
-                } else if (N != 0) {
-                    if (N < min)
-                        min = N;
-                    else if (N > max)
-                        max = N;
+        if (nombre != 0 ) {
+            liste_nombre.push(nombre)
+            this.parentNode.reset()
+        } else {
+            let min
+            let max
+
+            liste_nombre.forEach(
+                function(N) {
+                    if (isNaN(min) && isNaN(max)) {
+                        min = N
+                        max = N
+                    } else if (N != 0) {
+                        if (N < min)
+                            min = N
+                        else if (N > max)
+                            max = N
+                    }
                 }
-            }
-        )
+            )
 
-        let message = "<p>Mini : " + min + "</p><p>Max : " + max + "</p>";
+            message = "<p>Mini : " + min + "</p><p>Max : " + max + "</p>"
+            liste_nombre = []
+        }
+    } else {
+        message = "<p>Remplissez correctement les champs</p>"
+    }
+
+    if (message)
         vs.modal_result(message)
 
-        liste_nombre = [];
-    }
-}, false);
+}, false)

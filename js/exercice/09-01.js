@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "09 - Tableaux",
@@ -13,32 +14,28 @@ const data_send = {
     taille: {
         id: "taille",
         name: "Taille du tableau",
-        erreur: "Nom pas bon !"
+        pattern: "entier_zero_sup"
     },
     procedural: {
         id: "test_",
         name: "Champ ",
-        erreur: "Nom pas bon !"
+        pattern: "entier"
     }
 }
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.taille)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.taille)
+})
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text:`
-            <div id="champ_optionelle"><div>
-        `
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text:`
+        <div id="champ_optionelle"><div>
+    `
+})
 
 vs.form_end()
 
@@ -63,15 +60,20 @@ document.getElementById(data_send.taille.id).addEventListener("change", function
         text: fragment_optional,
     })
 }, false)
+
 document.getElementById('valid_form').addEventListener("click", function () {
-    let array_length = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value);      
-            
-    let resultat = "";
-    for (let i = 0; i < array_length; i++) {
-        resultat = resultat + "<p>Valeur ["+ i +"] : "+ this.parentNode.querySelector("#" + data_send.procedural.id + i).value + "<p>"
+    let message = "";
+
+    if (verif_form.no_error()) {
+        let array_length = parseInt(this.parentNode.querySelector("#" + data_send.taille.id).value);      
+        for (let i = 0; i < array_length; i++) {
+            message = message + "<p>Valeur ["+ i +"] : "+ this.parentNode.querySelector("#" + data_send.procedural.id + i).value + "<p>"
+        }
+    } else {
+        message = "<p>Remplissez correctement les champs</p>"
     }
 
-    vs.modal_result(resultat)
+    vs.modal_result(message)
     
     const event = new Event('change');
     document.getElementById(data_send.taille.id).dispatchEvent(event);       

@@ -83,5 +83,5 @@ document.getElementById('valid_form').addEventListener("click", function () {
     retour = "<p>" + retour + "</p>"
 
     vs.modal_result(retour)
-
+    e.preventDefault()
 }, false)

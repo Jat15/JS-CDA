@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "09 - Tableaux",
@@ -11,25 +12,21 @@ const data_send = {
     tableau: {
         id: "tableau",
         name: "Tableau",
-        erreur: "Nom pas bon !"
+        pattern: "entier_separe"
     }
 }
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: "<p>Séparé les nombres par des espaces</p>"
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: "<p>Séparé les nombres par des espaces</p>"
+})
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.tableau)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.tableau)
+})
 
 vs.form_end()
 
@@ -39,8 +36,8 @@ document.getElementById('valid_form').addEventListener("click", function () {
         let n = array.length;
 
         while ( j != n) {
-            var i = j - 1;
-            var tmp = array[j];
+            let i = j - 1;
+            let tmp = array[j];
             while ( i > -1 && array[i] > tmp) {
                 array [i+1] = array[i];
                 i--;
@@ -51,18 +48,22 @@ document.getElementById('valid_form').addEventListener("click", function () {
 
         return array
     }
-    
-    let array = this.parentNode.querySelector("#" + data_send.tableau.id).value
 
-    array = array.split(" ")
+    let message
+    if (verif_form.no_error()) {  
+        let array = this.parentNode.querySelector("#" + data_send.tableau.id).value
+        array = array.split(" ")
 
-    for (let i=0; i < array.length; i++){
-        array[i] = parseInt(array[i])
+        for (let i=0; i < array.length; i++) {
+            array[i] = parseInt(array[i])
+        }
+
+        array = tri_bulle(array)
+
+        message = "<p>" + array + "</p>"
+    } else {
+        message = "<p>Remplissez correctement le champ</p>"
     }
 
-    array = tri_bulle(array)
-
-    const message = "<p>" + array + "</p>"
     vs.modal_result(message)
-    
 }, false)

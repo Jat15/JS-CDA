@@ -54,14 +54,14 @@ vs.add({
 
 vs.form_end()
 
-document.getElementById('valid_form').addEventListener("click", function () {
+document.getElementById('valid_form').addEventListener("click", function() {
     let message
     
     if (verif_form.no_error()) {
         let pourcentage
         const marie =  parseInt(this.parentNode.querySelector("input[name=\"" + data_send.marie.name + "\"]:checked").value)
-        const enfant = parseInt(this.parentNode.getElementById(data_send.enfant.id).value)
-        const salaire = parseFloat(this.parentNode.getElementById(data_send.salaire.id).value)
+        const enfant = parseInt(this.parentNode.querySelector("#"+data_send.enfant.id).value)
+        const salaire = parseFloat(this.parentNode.querySelector("#"+data_send.salaire.id).value)
 
         pourcentage = marie
 

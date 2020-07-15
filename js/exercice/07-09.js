@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -16,7 +17,7 @@ const data_send = {
     nombre: {
         id: "nombre",
         name: "Nombre",
-        erreur: "Nom pas bon !"
+        pattern: "entier_sup"
     }
 }
 
@@ -24,45 +25,48 @@ let liste_age = [];
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.nombre)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.nombre)
+})
 
 vs.form_end()
 
 document.getElementById('valid_form').addEventListener("click", function () {
-    let N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
-    
-    liste_age.push(N)
-    
-    if ( N >= 100) {
-        let moin_vingt = 0;
-        let entre_vingt_quarante = 0;
-        let plus_quarante = 0;
-        
-        liste_age.forEach(
-            function(age) {
-                N =  parseInt(age);
-                if (age < 20)
-                    moin_vingt++;
-                else if (age >= 20 && age <= 40)
-                    entre_vingt_quarante++;
-                else
-                    plus_quarante++;
-            }
-        )
+    let message
 
-        const message= "<p>Moin de 20 ans : " + moin_vingt + "</p><p>Entre 20 et 40 ans : " + entre_vingt_quarante + "</p><p>Plus de 40 ans : " + plus_quarante + "</p>"
+    if (verif_form.no_error()) {
+        let N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
+        
+        liste_age.push(N)
+        
+        if ( N >= 100) {
+            let moin_vingt = 0;
+            let entre_vingt_quarante = 0;
+            let plus_quarante = 0;
             
-        vs.modal_result(message)
-        liste_age = [];
-        
-    }
-    this.parentNode.reset();
-    
+            liste_age.forEach(
+                function(age) {
+                    N =  parseInt(age);
+                    if (age < 20)
+                        moin_vingt++;
+                    else if (age >= 20 && age <= 40)
+                        entre_vingt_quarante++;
+                    else
+                        plus_quarante++;
+                }
+            )
 
+            message= "<p>Moin de 20 ans : " + moin_vingt + "</p><p>Entre 20 et 40 ans : " + entre_vingt_quarante + "</p><p>Plus de 40 ans : " + plus_quarante + "</p>"
+            
+            liste_age = [];  
+        }
+        this.parentNode.reset();
+    } else {
+        message = "<p>Remplissez correctement le champ</p>"
+    }
+
+    if (message)
+        vs.modal_result(message)
 
 }, false);

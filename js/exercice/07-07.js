@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -13,7 +14,7 @@ const def = {
         + `<li>4 x 7 = 28</li>`
         + `<li>5 x 7 = 35</li>`
     + `</ul>`
-    + `<p>Il est demandé de choisir la structure répétitive (for, while, do...while) la mieux appropriée au pro-blème.</p>`
+    + `<p>Il est demandé de choisir la structure répétitive (for, while, do...while) la mieux appropriée au problème.</p>`
     + `<p>On ne demande pas pour le moment de gérer les débordements (overflows) dus à des demandes de calcul dépassant la capacité de la machine.</p>`
 }
 
@@ -21,44 +22,43 @@ const data_send = {
     nombre1: {
         id: "nombre1",
         name: "Table de 1 a",
-        erreur: "Nom pas bon !"
+        pattern: "entier"
     },
     nombre2: {
         id: "nombre2",
         name: "Multiple",
-        erreur: "Nom pas bon !"
+        pattern: "entier"
     }
 }
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.nombre1)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.nombre1)
+})
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.nombre2)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.nombre2)
+})
 
 vs.form_end()
 
 document.getElementById('valid_form').addEventListener("click", function () {
     let resultat = ""
-    const repetition = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
-    const multiple = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
+    
+    if (verif_form.no_error()) {
+        const repetition = parseInt(this.parentNode.querySelector("#" + data_send.nombre1.id).value)
+        const multiple = parseInt(this.parentNode.querySelector("#" + data_send.nombre2.id).value)
 
-    for (let i = 1; i <= repetition; i++)
-    {   
-        resultat +="<p>" + i + " x " + multiple + " = " + (i*multiple) + "</p>"
+        for (let i = 1; i <= repetition; i++) {   
+            resultat +="<p>" + i + " x " + multiple + " = " + (i*multiple) + "</p>"
+        }
+    } else {
+        resultat = "<p>Remplissez correctement les champs</p>"
     }
 
-
     vs.modal_result(resultat)
-    
-}, false);
+   
+}, false)

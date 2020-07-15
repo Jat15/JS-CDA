@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "07 - Boucles",
@@ -15,36 +16,38 @@ const data_send = {
     nombre: {
         id: "nombre",
         name: "Nombre",
-        erreur: "Nom pas bon !"
+        pattern: "entier_zero_sup"
     },
 }
 let nombre_magic = parseInt(Math.random()*100);
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.nombre)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.nombre)
+})
 
 vs.form_end()
 
 document.getElementById('valid_form').addEventListener("click", function () {
-    const nombre_utilisateur = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
     let message = ""
 
-    if (nombre_magic > nombre_utilisateur)
-        message = "Le nombre magique est plus grand"
-    else if (nombre_magic < nombre_utilisateur)
-        message = "Le nombre magique est petit"
-    else
-    {
-        message = "Bravo !!!!"
-        nombre_magic = parseInt(Math.random()*100)
+    if (verif_form.no_error()) {
+        const nombre_utilisateur = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value)
+        if (nombre_magic > nombre_utilisateur)
+            message = "Le nombre magique est plus grand"
+        else if (nombre_magic < nombre_utilisateur)
+            message = "Le nombre magique est petit"
+        else {
+            message = "Bravo !!!!"
+            nombre_magic = parseInt(Math.random()*100)
+        }
+    } else {
+        message = "<p>Remplissez correctement le champ</p>"
     }
     
     message = "<p>" + message + "</p>"
+
     vs.modal_result(message)
 }, false);

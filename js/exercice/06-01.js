@@ -38,7 +38,7 @@ document.getElementById('valid_form').addEventListener("click", function() {
         resultat = "Remplissez correctement le champ"
     }
     resultat = "<p>" + resultat + "</p>"
-
+    
     vs.modal_result(resultat)
-
+    
 }, false)

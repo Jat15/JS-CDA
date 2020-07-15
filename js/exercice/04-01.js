@@ -78,5 +78,4 @@ document.getElementById('valid_form').addEventListener("click", function () {
 
     //envoie du message
     vs.modal_result(message)
-
 }, false)

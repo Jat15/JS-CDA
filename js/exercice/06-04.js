@@ -82,5 +82,5 @@ document.getElementById('valid_form').addEventListener("click", function () {
     }
 
     vs.modal_result(message)
-
+    e.preventDefault()
 }, false)

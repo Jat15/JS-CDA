@@ -1,5 +1,6 @@
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 const def = { 
     cours : "08 - Fonctions",
@@ -19,42 +20,34 @@ const data_send = {
     nombre: {
         id: "nombre",
         name: "Nombre",
-        erreur: "Nom pas bon !"
+        pattern: "entier"
     }
 }
 
 vs.form_start(def)
 
-vs.add(
-    {
-        selecteur: "#formulaire",
-        text: vs.form_name(data_send.nombre)
-    }
-)
+vs.add({
+    selecteur: "#formulaire",
+    text: vs.form_name(data_send.nombre)
+})
 
 vs.form_end()
 
 document.getElementById('valid_form').addEventListener("click", function () {
-    let N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
-    let message = "";
-
-    function multiplication(multiple)
-    {
+    function multiplication(multiple) {
         let phrase = "";  
-        for (let i = 1; i <= 10; i++)
-        {   
+        for (let i = 1; i <= 10; i++) {   
             phrase = "<p>" + phrase + i + " x " + multiple + " = " + (i * multiple) + "</p>";
         }
         return phrase;
     }
+    let message = "";
 
-    let nombres = new RegExp("^-?[0-9]{1,}$");
-
-    if ( nombres.test(N) ) {
-        N = parseInt(N);
+    if (verif_form.no_error()) {
+        let N = parseInt(this.parentNode.querySelector("#" + data_send.nombre.id).value);
         message = multiplication(N);
     } else {
-        message = "<p>Nombre entier positif ou négatif</p>";
+        message = "<p>Remplissez correctement le champ</p>"
     }
 
     vs.modal_result(message)

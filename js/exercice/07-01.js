@@ -29,7 +29,7 @@ vs.add({
 
 vs.form_end()
 
-document.getElementById('valid_form').addEventListener("click", function () {        
+document.getElementById("valid_form").addEventListener("click", function() {  
     let message
 
     if (verif_form.no_error()) {     
@@ -54,5 +54,4 @@ document.getElementById('valid_form').addEventListener("click", function () {
 
     if (message)
         vs.modal_result(message)
-
-}, false)
+},false)
