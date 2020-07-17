@@ -49,6 +49,12 @@ export const menu = {
             "03",
             "04"
         ]
+    },
+    20: {
+        cours: "? - Formulaire",
+        excercice: [
+            "?"
+        ]
     }
 }
 
@@ -65,11 +71,12 @@ function create_menu() {
         + `<ul>`
 
       Object.entries(valeur.excercice).forEach(([key, value]) => {
-          let ex = parseInt(key)+1
-          ex = ex<10 ? "0"+ex : ex
-  
+         let ex = parseInt(key)+1
+        ex = ex<10 ? "0"+ex : ex
+        let c= parseInt(cle)
+        c = c<10 ? "0" + c : c
           text +=`<li>`
-                +`<a class="mdl-navigation__link" href="index.html?c=0` + cle + `&e=` + ex + `">`+ value + `</a>`
+                +`<a class="mdl-navigation__link" href="index.html?c=` + c + `&e=` + ex + `">`+ value + `</a>`
             +`</li>`
 
       });
