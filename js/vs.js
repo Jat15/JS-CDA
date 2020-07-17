@@ -40,24 +40,49 @@ export function form_name(data) {
 
 //export la function de création de bouton radio (insertadjacentHTML)
 export function form_radio(data) {
-    let create= "<fieldset class=\"mdl-cell mdl-cell--12-col\" ><legend>" + data.box_name+ "</legend>"
+    let fragment = document.createDocumentFragment();
+    let el = document.createElement("fieldset")
+    el.className = "mdl-cell mdl-cell--12-col"
+    fragment.appendChild(el);
+
+    el = document.createElement("legend")
+    el.textContent = data.box_name
+    fragment.querySelector("fieldset").appendChild(el);
+
     let id
     let n = 0
 
     data.value.forEach(function(value){
-       id = data.name + "_" + n;
-       create += `<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="` + id + `">`
-                    + `<input type="radio" id="` + id + `" class="mdl-radio__button" name="` + data.name + `" value="` + value + `" ` + ( n == 0 ? "checked" : "") +`>`
-                    + `<span class="mdl-radio__label">` + data.label[n] + `</span>`
-                + `</label>`
+        let subfragment = document.createDocumentFragment();   
+        id = data.name + "_" + n;
 
+        el = document.createElement("label")
+        el.className = "mdl-radio mdl-js-radio mdl-js-ripple-effect"
+        el.htmlFor = id
+        subfragment.appendChild(el);
+
+        el = document.createElement("input")
+        el.type = "radio"
+        el.id = id
+        el.className = "mdl-radio__button"
+        el.name = data.name
+        el.value = value
+        if (n == 0)
+            el.checked = true
+        subfragment.querySelector("label").appendChild(el);
+    
+        el = document.createElement("span")
+        el.className = "mdl-radio__label"
+        el.textContent = data.label[n]
+        subfragment.querySelector("label").appendChild(el);
+
+        fragment.querySelector("fieldset").appendChild(subfragment)
         n++
     })
 
-    create += "</fieldset>"
-
-    return create;
+    return fragment;
 }
+
 
 //Création du bouton
 export function form_button(data) {
