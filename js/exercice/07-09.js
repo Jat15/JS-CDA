@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "07 - Boucles",
     excercice : "09 - Calcul du nombre de jeunes, de moyens et de vieux",
@@ -12,7 +14,6 @@ const def = {
         + `<li>Donnez le programme Javascript correspondant qui affiche les résultats.</li>`
         + `</ul>`
 }
-
 const data_send = {
     nombre: {
         id: "nombre",
@@ -21,17 +22,18 @@ const data_send = {
     }
 }
 
-let liste_age = [];
+//Variable pour l'action
+let liste_age = []
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.nombre)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let message
 

@@ -1,14 +1,15 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "09 - Tableaux",
     excercice : "03",
     intitule : `<p>On recherche dans un tableau contenant 20 prénoms, un prénom saisi au clavier.</p>`
     + `<p>Lorsque cet élément est trouvé, on l’élimine du tableau en décalant les cases qui le suivent, et en mettant à blanc la dernière case.</p>`
 }
-
 const data_send = {
     prenom: {
         id: "prenom",
@@ -39,20 +40,19 @@ const data_send = {
     ]
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: "<p>" + data_send.tab.join(', ') + "</p>"
 })
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.prenom)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let message = ""
 

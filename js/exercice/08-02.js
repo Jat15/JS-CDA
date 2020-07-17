@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "08 - Fonctions",
     excercice : "02 - Table de multiplication",
@@ -15,7 +17,6 @@ const def = {
             + `<li>...</li>`
         + `</ul>`
 }
-
 const data_send = {
     nombre: {
         id: "nombre",
@@ -24,15 +25,15 @@ const data_send = {
     }
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.nombre)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     function multiplication(multiple) {
         let phrase = "";  

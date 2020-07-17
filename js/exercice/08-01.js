@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "08 - Fonctions",
     excercice : "01",
@@ -11,7 +13,6 @@ const def = {
             + `<li>afficheImg(image)qui affiche l’image passée en paramètre.</li>`
         + `</ul>`
 }
-
 const data_send = {
     x: {
         id: "x",
@@ -25,20 +26,19 @@ const data_send = {
     },
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.x)
 })
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.y)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     function produit(x,y) {
         return "<p>Le produit de " + x + " x " + y + " est égale à " +  ( x * y ) + "</p>";

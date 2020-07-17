@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "09 - Tableaux",
     excercice : "01",
@@ -9,7 +11,6 @@ const def = {
         + `<p>Ensuite l'utilisateur doit rentrer les différentes valeurs du tableau.</p>`
         + `<p>Puis votre programme doit afficher le contenu du tableau</p>`
 }
-
 const data_send = {
     taille: {
         id: "taille",
@@ -23,23 +24,21 @@ const data_send = {
     }
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.taille)
 })
-
 vs.add({
     selecteur: "#formulaire",
-    text:`
-        <div id="champ_optionelle"><div>
-    `
+    text:`<div id="champ_optionelle"><div>`
 })
-
 vs.form_end()
 
+//Action
 
+//Création de input a la modification du champ taille
 document.getElementById(data_send.taille.id).addEventListener("change", function () {
     let fragment_optional = document.createDocumentFragment();
     vs.kill_child(document.querySelector("#champ_optionelle"))
@@ -75,6 +74,7 @@ document.getElementById('valid_form').addEventListener("click", function () {
 
     vs.modal_result(message)
     
+    //forcer le changement sur le champ taille
     const event = new Event('change');
     document.getElementById(data_send.taille.id).dispatchEvent(event);       
     

@@ -1,13 +1,14 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "09 - Tableaux",
     excercice : "04",
     intitule : `<p>Ecrire le programme qui réalise le tri à bulles.</p>`
 }
-
 const data_send = {
     tableau: {
         id: "tableau",
@@ -16,20 +17,19 @@ const data_send = {
     }
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: "<p>Séparé les nombres par des espaces</p>"
 })
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.tableau)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     function tri_bulle(array) {
         let j = 1;
@@ -45,7 +45,6 @@ document.getElementById('valid_form').addEventListener("click", function () {
             array[i+1] = tmp;
             j++;
         }
-
         return array
     }
 
@@ -57,9 +56,7 @@ document.getElementById('valid_form').addEventListener("click", function () {
         for (let i=0; i < array.length; i++) {
             array[i] = parseInt(array[i])
         }
-
         array = tri_bulle(array)
-
         message = "<p>" + array + "</p>"
     } else {
         message = "<p>Remplissez correctement le champ</p>"

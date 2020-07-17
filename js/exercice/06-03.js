@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "06 - Conditions",
     excercice : "03 - Calculette",
@@ -9,7 +11,6 @@ const def = {
         + `<p>Si l'utilisateur entre un opérateur erroné, le programme affichera un message d'erreur.</p>`
         + `<p>Dans  le  cas  contraire,  le  programme  effectuera  l'opération  demandée  (en  prévoyant  le  cas  d'erreur "division par 0"), puis affichera le résultat.</p>`
 }
-
 const data_send = {
     nombre1 : {
         id : "nombre1",
@@ -28,28 +29,25 @@ const data_send = {
     }
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur : "#formulaire",
     text : vs.form_name (data_send.nombre1)
 })
-
 vs.add({
     selecteur : "#formulaire",
     text : vs.form_name (data_send.operateur)
 })
-
 vs.add({
     selecteur : "#formulaire",
     text : vs.form_name (data_send.nombre2)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let retour
-
 
     if (verif_form.no_error()) {
         let resultat
@@ -83,5 +81,4 @@ document.getElementById('valid_form').addEventListener("click", function () {
     retour = "<p>" + retour + "</p>"
 
     vs.modal_result(retour)
-    e.preventDefault()
 }, false)

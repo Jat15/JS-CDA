@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "08 - Fonctions",
     excercice : "04 - Menu",
@@ -9,7 +11,6 @@ const def = {
         + `<p>L’option 4 est une généralisation de la recherche du nombre de voyelles dans un mot: elle permet de rechercher la présence de n’importe quel caractère dans une chaîne.</p>`
         + `<p>La recherche de voyelles dans une chaîne constitue une surcharge de cette fonction, dans la mesure où les caractères à rechercher seront fournis sous forme de chaîne.</p>`
 }
-
 const data_send = {
     multiple: {
         id: "multiple",
@@ -91,8 +92,9 @@ const data_send = {
     }
 
 }
-
 let liste_nombre = []
+
+//Création de la page
 
 // création des variables
 let fragment = document.createDocumentFragment()
@@ -121,8 +123,8 @@ vs.add({
     text: def.intitule
 })
 
+//Bouton menu
 fragment = document.createDocumentFragment()
-
 el = vs.form_button(data_send.menu)
 fragment.appendChild(el)
 
@@ -131,7 +133,6 @@ el = document.createElement("div")
 el.id = "page_menu"
 el.className = "mdl-grid"
 fragment.appendChild(el)
-
 
 el = vs.form_button(data_send.multiple)
 el.querySelector("button").className =  el.querySelector("button").className + " mdl-cell mdl-cell--12-col"
@@ -153,7 +154,6 @@ fragment.querySelector("#page_menu").appendChild(el)
 
 
 //Div multiple
-
 el = document.createElement("form")
 el.id = data_send.multiple.page.id
 fragment.appendChild(el)
@@ -169,8 +169,6 @@ fragment.querySelector("#" + data_send.multiple.page.id).appendChild(el)
 
 
 //Div somme
-
-
 el = document.createElement("form")
 el.id = data_send.somme.page.id
 fragment.appendChild(el)
@@ -183,8 +181,6 @@ fragment.querySelector("#" + data_send.somme.page.id).appendChild(el)
 
 
 //Div voyelle
-
-
 el = document.createElement("form")
 el.id = data_send.voyelle.page.id
 fragment.appendChild(el)
@@ -196,9 +192,6 @@ el = vs.form_button(data_send.voyelle.page.button)
 fragment.querySelector("#" + data_send.voyelle.page.id).appendChild(el)
 
 //Div caractère
-
-
-
 el = document.createElement("form")
 el.id = data_send.caractere.page.id
 fragment.appendChild(el)
@@ -212,33 +205,31 @@ fragment.querySelector("#" + data_send.caractere.page.id).appendChild(el)
 el = vs.form_button(data_send.caractere.page.button)
 fragment.querySelector("#" + data_send.caractere.page.id).appendChild(el)
 
-
 //Envoie du corp
-
 vs.add({
     selecteur: "#vs-contenue",
     text: fragment
 })
 
-
-vs.add(
-    {
+//Creation de la Modal
+vs.add({
         selecteur: "#vs-contenue",
-        text: `<div id="dialog" class="mdl-dialog">
-            <div class="vs-test-dialog">
-            <h3 class="mdl-dialog__title">Resultat</h3>
-            <div class="mdl-dialog__content">
-                <div id="resultat"></div>
-            </div>
-            <div class="mdl-dialog__actions">
-                <a type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="#">Close</a>
-            </div>
-            </div>
-        </div>`
-    }
-);
+        text: `<div id="dialog" class="mdl-dialog">`
+                + `<div class="vs-test-dialog">`
+                    + `<h3 class="mdl-dialog__title">Resultat</h3>`
+                    + `<div class="mdl-dialog__content">`
+                        +`<div id="resultat"></div>`
+                    + `</div>`
+                    + `<div class="mdl-dialog__actions">`
+                        + `<a type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="#">Close</a>`
+                    + `</div>`
+                + `</div>`
+            + `</div>`
+})
 
+//Création des changement de div
 
+//Variable pour le menu
 const menu_nav = [
     [
         data_send.menu.id,
@@ -256,10 +247,12 @@ const menu_nav = [
     ]
 ]
 
+//Création des event
 for (let i=0; i < menu_nav[0].length; i++) {
     document.getElementById(menu_nav[0][i]).addEventListener("click", function () {toggle_page(menu_nav[1][i])})
 }
 
+//Function pour changé la page
 function toggle_page(lapage) {
     liste_nombre = []
     menu_nav[1].forEach(
@@ -269,8 +262,11 @@ function toggle_page(lapage) {
     )
 }
 
+//Va sur la page menu
 toggle_page("page_menu")
     
+
+//Action
 
 //multiple
 document.getElementById(data_send.multiple.page.button.id).addEventListener("click", function () {

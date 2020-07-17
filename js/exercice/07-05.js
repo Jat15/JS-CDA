@@ -1,13 +1,14 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "07 - Boucles",
     excercice : "05 - Moyenne",
     intitule : `<p>Ecrire un programme qui saisit des entiers et en affiche la somme et la moyenne (on arrête la saisie avec la valeur 0).</p> `
 }
-
 const data_send = {
     nombre: {
         id: "nombre",
@@ -15,18 +16,17 @@ const data_send = {
         pattern: "entier_zero_sup"
     }
 }
-
 let liste_nombre = []
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.nombre)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let message
     

@@ -1,3 +1,4 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
@@ -12,6 +13,7 @@ const def = {
     + `<p>Utilisez alert pour afficher les messages «Trop grand» ou «Trop petit», promptpour demander une valeur à l’utilisateur et confirmpour lui demander de rejouer.</p>`
 }
 
+//Variable pour la création de la page
 const data_send = {
     nombre: {
         id: "nombre",
@@ -19,17 +21,18 @@ const data_send = {
         pattern: "entier_zero_sup"
     },
 }
+//Variable pour l'action
 let nombre_magic = parseInt(Math.random()*100);
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.nombre)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let message = ""
 

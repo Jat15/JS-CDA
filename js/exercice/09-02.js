@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "09 - Tableaux",
     excercice : "02",
@@ -22,7 +24,6 @@ const def = {
         + `</ul>`
         +`<p>Les fonctions seront appelées successivement.</p>`
 }
-
 const data_send = {
     create_table: {
         id: "create_table",
@@ -90,7 +91,6 @@ vs.add ({
 })
 
 //Création de la table InitTab()
-
 vs.add({
     selecteur: "#vs-contenue",
     text:`<form id="` + data_send.create_table.id + `"><form>`
@@ -109,7 +109,6 @@ vs.add({
 })
 
 //Menu
-
 vs.add({
     selecteur: "#vs-contenue",
     text:`<div id="` + data_send.menu.id + `"><div>`
@@ -132,7 +131,6 @@ vs.add({
 })
 
 //Demande de l'index
-
 vs.add({
     selecteur: "#vs-contenue",
     text:`<form id="` + data_send.index.id + `"><form>`
@@ -167,6 +165,7 @@ vs.add({
         </div>`
 });
 
+//Gestion des bouton du menu
 const menu_nav = [
     [
         data_send.menu.back_create_table.id,
@@ -199,6 +198,7 @@ function toggle_page(lapage) {
 
 toggle_page(menu_nav[1][0])
 
+//Action
 
 //InitTab()
 document.getElementById(data_send.create_table.taille.id).addEventListener("change", function () {
@@ -262,7 +262,6 @@ document.getElementById(data_send.menu.bouton2.id).addEventListener("click", fun
 
 
 //RechercheTab()
-
 document.getElementById(data_send.index.bouton_valid.id).addEventListener("click", function () {
     let resultat
 

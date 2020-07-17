@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "07 - Boucles",
     excercice : "07 - Multiples",
@@ -17,7 +19,6 @@ const def = {
     + `<p>Il est demandé de choisir la structure répétitive (for, while, do...while) la mieux appropriée au problème.</p>`
     + `<p>On ne demande pas pour le moment de gérer les débordements (overflows) dus à des demandes de calcul dépassant la capacité de la machine.</p>`
 }
-
 const data_send = {
     nombre1: {
         id: "nombre1",
@@ -31,20 +32,19 @@ const data_send = {
     }
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.nombre1)
 })
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.nombre2)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let resultat = ""
     

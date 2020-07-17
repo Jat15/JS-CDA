@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "07 - Boucles",
     excercice : "08 - Nombre de voyelles",
@@ -12,7 +14,6 @@ const def = {
             + `<li>myVar.indexOf(chaine): retournele rang de la première occurrence de chainedans la variable myVardonnée (si non trouvé : -1).</li>`
         + `</ul>`
 }
-
 const data_send = {
     phrase: {
         id: "phrase",
@@ -21,15 +22,15 @@ const data_send = {
     },
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.phrase)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
     let message
 

@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "08 - Fonctions",
     excercice : "05 - String Token",
@@ -9,7 +11,6 @@ const def = {
     + `<p>strtok sert à extraire le nième mot de str1.</p>`
     + `<p>Exemple:Pour str1 = «robert ;dupont ;amiens ;80000 », strtok (str1, « ; », 3) doit retourner« amiens »</p>`
 }
-
 const data_send = {
     str1: {
         id: "str1",
@@ -28,28 +29,25 @@ const data_send = {
     }
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.str1)
 })
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.str2)
 })
-
 vs.add({
     selecteur: "#formulaire",
     text: vs.form_name(data_send.n)
 })
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
-    function strtok(str1, str2, n)
-    {
+    function strtok(str1, str2, n) {
         let trouver = 0;
         let run = true;
         let message = "";

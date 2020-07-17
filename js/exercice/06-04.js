@@ -1,7 +1,9 @@
+//Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
 import * as verif_form from '../formulaire.js'
 
+//Variable pour la création de la page
 const def = { 
     cours : "06 - Conditions",
     excercice : "04 - Remise",
@@ -12,8 +14,6 @@ const def = {
             + `<li>la remise est de 5% si TOT est compris entre 100 et 200 € et de 10% au-delà</li>`
         + `</ul>`
 }
-
-
 const data_send = {
     pu : {
         id : "pu",
@@ -27,8 +27,8 @@ const data_send = {
     },
 }
 
+//Création de la page
 vs.form_start(def)
-
 vs.add(
     {
         selecteur : "#formulaire",
@@ -41,9 +41,9 @@ vs.add(
         text : vs.form_name (data_send.qte)
     }
 )
-
 vs.form_end()
 
+//Action
 document.getElementById('valid_form').addEventListener("click", function () {
 
     //Prix a payer , port , remise, tot= prix total
@@ -67,8 +67,7 @@ document.getElementById('valid_form').addEventListener("click", function () {
         
         if (PAP > 500)
             PORT = 0
-        else
-        {
+        else {
             PORT = PAP * (2 / 100)
             if (PORT < 6)
                 PORT = 6 
@@ -82,5 +81,4 @@ document.getElementById('valid_form').addEventListener("click", function () {
     }
 
     vs.modal_result(message)
-    e.preventDefault()
 }, false)
