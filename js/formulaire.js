@@ -49,6 +49,18 @@ export const regex = {
     lettres: {
         pattern: /^([A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*|[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]*)+$/,
         message: "Des lettres."
+    },
+    code_postal: {
+        pattern: /^[0-9]{5}$/,
+        message: "Veuillez choisir un code postal valide."
+    },
+    email: {
+        pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+        message: "Veuillez choisir un courielle valide"
+    },
+    date: {
+        pattern: /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/,
+        message: "Veuillez choisir une date valide"
     }
 }
 
