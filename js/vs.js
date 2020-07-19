@@ -57,7 +57,7 @@ export function form_radio(data) {
         id = data.name + "_" + n;
 
         el = document.createElement("label")
-        el.className = "mdl-radio mdl-js-radio mdl-js-ripple-effect"
+        el.className = "mdl-cell mdl-radio mdl-js-radio mdl-js-ripple-effect"
         el.htmlFor = id
         subfragment.appendChild(el);
 
