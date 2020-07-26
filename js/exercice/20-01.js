@@ -1,3 +1,6 @@
+window.location.replace("formulaire/")
+/*
+//On abandonne
 //Menu, function création page, function vérification des formulaire
 import {} from '../menu.js'
 import * as vs from '../vs.js'
@@ -98,21 +101,26 @@ vs.add({
     selecteur: "#vs-contenue",
     text: fragment
 })
-vs.add({
-    selecteur: "#formulaire",
-    text: `<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
-    <textarea class="mdl-textfield__input" type="text" rows= "3" id="schools"></textarea>
-    <label class="mdl-textfield__label" for="schools">Schools attended</label>
-  </div>`
-})
-vs.add({
-    selecteur: "#formulaire",
-    text: `<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell--12-col" for="checkbox-1">
-    <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" checked>
-    <span class="mdl-checkbox__label">J'accepte le traitement informatique de ce formulaire.</span>
-  </label>`
-})
 
+vs.add({
+    selecteur: "#formulaire",
+    text: `<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">`
+        + `<textarea class="mdl-textfield__input" type="text" rows= "3" id="question" data-vs-form-pattern="phrase"></textarea>`
+        + `<label class="mdl-textfield__label" for="question">Votre question</label>`
+        + `<span class="mdl-textfield__error">Accepte tout et n'importe quoi</span>`
+    + `</div>`
+})
+verif_form.create_event("question")
+
+vs.add({
+    selecteur: "#formulaire",
+    text: `<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-cell--12-col" for="checkbox-1">`
+        + `<input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" data-vs-form-pattern="checkbox" value="valider">`
+        + `<span class="mdl-checkbox__label">J'accepte le traitement informatique de ce formulaire.</span>`
+//        + `<span class="mdl-textfield__error">Cocher moi!</span>`
+    + `</label>`
+})
+verif_form.create_event("checkbox-1")
 
 vs.form_end()
 
@@ -121,17 +129,11 @@ document.getElementById('valid_form').addEventListener("click", function () {
     let message
 
     if ( verif_form.no_error() ) {
-        //Récupération des input
-        const nom = this.parentNode.querySelector("#" + data_send.nom.id).value
-        const prenom = this.parentNode.querySelector("#" + data_send.prenom.id).value
-        const genre = this.parentNode.querySelector("input[name=\"" + data_send.genre.name + "\"]:checked").value
-
-        //Création du message
-        message = "<p>Bonjour " + genre + " " + nom + " " + prenom + "</p>"
+        message = "<p>Valide</p>"
     } else {
         message = "<p>Remplissez correctement vos champs</p>"
     }
 
     //envoie du message
     vs.modal_result(message)
-}, false)
+}, false)*/
