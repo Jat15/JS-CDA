@@ -61,6 +61,10 @@ export const regex = {
     date: {
         pattern: /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/,
         message: "Veuillez choisir une date valide"
+    },
+    checkbox: {
+        pattern: /^valider$/,
+        message: "Cocher moi!"
     }
 }
 
@@ -123,6 +127,21 @@ export function no_error(id) {
     if (id)
         area = document.querySelector("#" + id)
     area.querySelectorAll("input[data-vs-form-pattern]").forEach( input => no_error = affichage(input.id) && no_error )
+    area.querySelectorAll("textarea[data-vs-form-pattern]").forEach( input => no_error = affichage(input.id) && no_error )
 
     return no_error
 }
+
+//Entrée interdit sur les input
+
+window.addEventListener('keydown',
+    function(e){
+        if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13) {
+            if(e.target.nodeName=='INPUT' && e.target.type=='text') {
+                e.preventDefault();
+                return false;
+            }
+        }
+    }
+    ,true
+)
