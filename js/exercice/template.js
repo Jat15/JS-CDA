@@ -2,6 +2,7 @@
 //importation de fonction
 import {} from '../menu.js'
 import * as vs from '../vs.js'
+import * as verif_form from '../formulaire.js'
 
 //donnée de base de l'excercice
 const def = {
@@ -34,26 +35,19 @@ const data_send = {
 //Création du contenue de la page
 vs.form_start(def)
 
-vs.add(
-    {
+vs.add({
         selecteur: "#formulaire",
         text: vs.form_name(data_send.nom)
-    }
-)
-
-vs.add(
-    {
+})
+vs.add({
         selecteur: "#formulaire",
         text: vs.form_name(data_send.prenom)
-    }
-)
+})
 
-vs.add(
-    {
+vs.add({
         selecteur: "#formulaire",
         text: vs.form_radio(data_send.genre)
-    }
-)
+})
 
 vs.form_end()
 
@@ -64,10 +58,12 @@ document.getElementById('valid_form').addEventListener("click", function () {
     const prenom = this.parentNode.querySelector("#" + data_send.prenom.id).value
     const genre = this.parentNode.querySelector("input[name=\"" + data_send.genre.name + "\"]:checked").value
 
-    //Création du message
-    let message = "<p>Bonjour " + genre + " " + nom + " " + prenom + "</p>"
+    if (verif_form.no_error(data_send.index.bouton_valid.id)) {
+        resultat = "<p>Valide</p>"
+    } else {
+        resultat = "<p>Remplissez correctement le champ</p>"
+    }
 
-    //envoie du message
-    vs.modal_result(this, message)
+    vs.modal_result(resultat)
 
 }, false);

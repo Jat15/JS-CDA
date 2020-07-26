@@ -14,6 +14,6 @@ if (!(c && e)) {
 //On charge la vue ou on met un message d'erreur
 import('./exercice/'+ c + '-' + e + '.js')
       .then(x => x)
-     /* .catch(err => {
+      .catch(err => {
         alert("Erreur")
-      })*/
+      })

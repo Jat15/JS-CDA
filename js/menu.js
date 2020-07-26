@@ -69,18 +69,15 @@ function create_menu() {
       text +=`<li>`
             + `<span class="mdl-layout-title">` + menu[cle].cours + `</span>`
         + `<ul>`
-
       Object.entries(valeur.excercice).forEach(([key, value]) => {
          let ex = parseInt(key)+1
         ex = ex<10 ? "0"+ex : ex
         let c= parseInt(cle)
         c = c<10 ? "0" + c : c
           text +=`<li>`
-                +`<a class="mdl-navigation__link" href="index.html?c=` + c + `&e=` + ex + `">`+ value + `</a>`
+                +`<a class="mdl-navigation__link" href="index.php?c=` + c + `&e=` + ex + `">`+ value + `</a>`
             +`</li>`
-
       });
-
       text +=`</ul>`
         +`</li>`
     });

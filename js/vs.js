@@ -158,7 +158,6 @@ export function form_end() {
     })
 }
 
-
 /*
     Création de l'en-tête du contenue
     Et de form
@@ -175,9 +174,6 @@ export function form_start(data){
             + `</form>`
     })
 }
-
-
-
 
 /*
     Retire les anciens resultat de la modal (killchild)
